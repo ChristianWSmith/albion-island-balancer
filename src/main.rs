@@ -1,53 +1,16 @@
-use linprog::{
-    Model,
-    Objective,
-    Summand,
-    Operator,
-    Var
+mod constants;
+mod model;
+mod types;
+use clap::{Arg, Command};
+
+use crate::{
+    model::optimize_plots, 
+    types::{
+        ModelContext, 
+        PremiumStatus, 
+        Product
+    }
 };
-use clap::{Arg, Command, ValueEnum};
-
-
-#[derive(ValueEnum, Clone, Debug)]
-enum Product {
-    MinorEnergyPotion,
-    MinorHealingPotion,
-    MinorGigantifyPotion,
-    MinorResistancePotion,
-    MinorStickyPotion,
-    MinorPoisonPotion,
-    EnergyPotion,
-    HealingPotion,
-    GigantifyPotion,
-    ResistancePotion,
-    StickyPotion,
-    PoisonPotion,
-    MajorEnergyPotion,
-    MajorHealingPotion,
-    MajorGigantifyPotion,
-    MajorResistancePotion,
-    MajorStickyPotion,
-    MajorPoisonPotion,
-    InvisibilityPotion,
-    ChickenOmelette,
-    GooseOmelette,
-    PorkOmelette,
-    BeanSalad,
-    TurnipSalad,
-    PotatoSalad,
-    GoatSandwich,
-    MuttonSandwich,
-    BeefSandwich,
-    CarrotSoup,
-    WheatSoup,
-    CabbageSoup,
-    GoatStew,
-    MuttonStew,
-    BeefStew,
-    RoastChicken,
-    RoastGoose,
-    RoastPork,
-}
 
 
 fn main() {
@@ -61,7 +24,7 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Brecilien (optional)"),
+                .help("Number of plots in Brecilien"),
         )
         .arg(
             Arg::new("bridgewatch-plots")
@@ -69,7 +32,7 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Bridgewatch (optional)"),
+                .help("Number of plots in Bridgewatch"),
         )
         .arg(
             Arg::new("caerleon-plots")
@@ -77,7 +40,7 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Caerleon (optional)"),
+                .help("Number of plots in Caerleon"),
         )
         .arg(
             Arg::new("fort-sterling-plots")
@@ -85,7 +48,7 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Fort Sterling (optional)"),
+                .help("Number of plots in Fort Sterling"),
         )
         .arg(
             Arg::new("lymhurst-plots")
@@ -93,7 +56,7 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Lymhurst (optional)"),
+                .help("Number of plots in Lymhurst"),
         )
         .arg(
             Arg::new("martlock-plots")
@@ -101,7 +64,7 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Martlock (optional)"),
+                .help("Number of plots in Martlock"),
         )
         .arg(
             Arg::new("thetford-plots")
@@ -109,7 +72,16 @@ fn main() {
                 .num_args(1)
                 .value_name("num_plots")
                 .default_value("0")
-                .help("Number of plots in Thetford (optional)"),
+                .help("Number of plots in Thetford"),
+        )
+        .arg(
+            Arg::new("premium-status")
+                .long("premium-status")
+                .num_args(1)
+                .value_name("status")
+                .value_parser(clap::builder::EnumValueParser::<PremiumStatus>::new())
+                .default_value("premium")
+                .help("Premium status"),
         )
         .arg(
             Arg::new("target")
@@ -118,7 +90,7 @@ fn main() {
                 .value_name("product")
                 .value_parser(clap::builder::EnumValueParser::<Product>::new())
                 .default_value("major-poison-potion")
-                .help("Target product (required)"),
+                .help("Target product"),
         )
         .get_matches();
 
@@ -130,6 +102,7 @@ fn main() {
     let lymhurst_plots = matches.get_one::<String>("lymhurst-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
     let martlock_plots = matches.get_one::<String>("martlock-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
     let thetford_plots = matches.get_one::<String>("thetford-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
+    let premium_status = matches.get_one::<PremiumStatus>("premium-status").expect("premium-status is required");
     let target = matches.get_one::<Product>("target").expect("target is required");
 
     // Display input conditions
@@ -141,13 +114,20 @@ fn main() {
     println!("Lymhurst Plots: {:?}", lymhurst_plots);
     println!("Martlock Plots: {:?}", martlock_plots);
     println!("Thetford Plots: {:?}", thetford_plots);
+    println!("Premium Status: {:?}", premium_status);
     println!("Target: {:?}", target);
-    
-    // LP model
-    let mut model = Model::new("My LP", Objective::Max);
-    let mut vars: Vec<Var> = vec![];
-    vars.push(model.reg_var(2.0));
-    model.reg_constr(vec![Summand(1.0, &vars[0])], Operator::Le, 10.0);
-    model.optimize();
+
+    let context = ModelContext {
+        brecilien_plots: brecilien_plots as f64,
+        bridgewatch_plots: bridgewatch_plots as f64,
+        caerleon_plots: caerleon_plots as f64,
+        fort_sterling_plots: fort_sterling_plots as f64,
+        lymhurst_plots: lymhurst_plots as f64,
+        martlock_plots: martlock_plots as f64,
+        thetford_plots: thetford_plots as f64,
+        premium_factor: if *premium_status == PremiumStatus::Premium { 2.0 } else { 1.0 },
+        target: *target
+    };
+    let model = optimize_plots(context);
     println!("{}", model);
 }
