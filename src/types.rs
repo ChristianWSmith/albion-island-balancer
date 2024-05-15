@@ -56,5 +56,5 @@ pub struct ModelContext {
     pub martlock_plots: f64,
     pub thetford_plots: f64,
     pub premium_factor: f64,
-    pub target: Product
+    pub target: Product,
 }

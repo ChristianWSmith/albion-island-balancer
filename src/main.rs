@@ -4,14 +4,9 @@ mod types;
 use clap::{Arg, Command};
 
 use crate::{
-    model::optimize_plots, 
-    types::{
-        ModelContext, 
-        PremiumStatus, 
-        Product
-    }
+    model::optimize_plots,
+    types::{ModelContext, PremiumStatus, Product},
 };
-
 
 fn main() {
     let matches = Command::new(env!("CARGO_PKG_NAME"))
@@ -95,15 +90,61 @@ fn main() {
         .get_matches();
 
     // Get the values of the arguments
-    let brecilien_plots = matches.get_one::<String>("brecilien-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let bridgewatch_plots = matches.get_one::<String>("bridgewatch-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let caerleon_plots = matches.get_one::<String>("caerleon-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let fort_sterling_plots = matches.get_one::<String>("fort-sterling-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let lymhurst_plots = matches.get_one::<String>("lymhurst-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let martlock_plots = matches.get_one::<String>("martlock-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let thetford_plots = matches.get_one::<String>("thetford-plots").map(|s| s.parse::<u32>().expect("num_plots must be a positive integer")).unwrap();
-    let premium_status = matches.get_one::<PremiumStatus>("premium-status").expect("premium-status is required");
-    let target = matches.get_one::<Product>("target").expect("target is required");
+    let brecilien_plots = matches
+        .get_one::<String>("brecilien-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let bridgewatch_plots = matches
+        .get_one::<String>("bridgewatch-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let caerleon_plots = matches
+        .get_one::<String>("caerleon-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let fort_sterling_plots = matches
+        .get_one::<String>("fort-sterling-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let lymhurst_plots = matches
+        .get_one::<String>("lymhurst-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let martlock_plots = matches
+        .get_one::<String>("martlock-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let thetford_plots = matches
+        .get_one::<String>("thetford-plots")
+        .map(|s| {
+            s.parse::<u32>()
+                .expect("num_plots must be a positive integer")
+        })
+        .unwrap();
+    let premium_status = matches
+        .get_one::<PremiumStatus>("premium-status")
+        .expect("premium-status is required");
+    let target = matches
+        .get_one::<Product>("target")
+        .expect("target is required");
 
     // Display input conditions
     println!("Inputs");
@@ -125,8 +166,12 @@ fn main() {
         lymhurst_plots: lymhurst_plots as f64,
         martlock_plots: martlock_plots as f64,
         thetford_plots: thetford_plots as f64,
-        premium_factor: if *premium_status == PremiumStatus::Premium { 2.0 } else { 1.0 },
-        target: *target
+        premium_factor: if *premium_status == PremiumStatus::Premium {
+            2.0
+        } else {
+            1.0
+        },
+        target: *target,
     };
     let model = optimize_plots(context);
     println!("{}", model);
