@@ -1,0 +1,483 @@
+# constants
+BONUS_FACTOR = 1.1
+ANIMAL_FAVORITE_FOOD_CONSUMPTION = 9
+TILES_PER_PLOT = 9
+MEAT_FACTOR = 20
+ANIMAL_PRODUCT_FACTOR = (12 + 8) / 2
+CROP_AND_HERB_FACTOR = (6 + 3) / 2
+POTIONS_PER_CRAFT = 5
+FOOD_PER_CRAFT = 10
+L01_INGREDIENT = 2
+L02_INGREDIENT = 4
+L03_INGREDIENT = 6
+L04_INGREDIENT = 8
+L05_INGREDIENT = 12
+L06_INGREDIENT = 16
+L07_INGREDIENT = 18
+L08_INGREDIENT = 24
+L09_INGREDIENT = 36
+L10_INGREDIENT = 48
+L11_INGREDIENT = 72
+L12_INGREDIENT = 144
+
+# arguments
+PREMIUM_FACTOR = uint (2.0 OR 0.0)
+PLOTS_BRECILIEN = uint
+PLOTS_BRIDGEWATCH = uint
+PLOTS_CAERLEON = uint
+PLOTS_FORT_STERLING = uint
+PLOTS_LYMHURST = uint
+PLOTS_MARTLOCK = uint
+PLOTS_THETFORD = uint
+
+# variables
+plots_brecilien
+plots_bridgewatch
+plots_caerleon
+plots_fort_sterling
+plots_lymhurst
+plots_martlock
+plots_thetford
+
+## plot usage
+herb_gardens_brecilien
+farms_brecilien
+pastures_brecilien
+herb_gardens_bridgewatch
+farms_bridgewatch
+pastures_bridgewatch
+herb_gardens_caerleon
+farms_caerleon
+pastures_caerleon
+herb_gardens_fort_sterling
+farms_fort_sterling
+pastures_fort_sterling
+herb_gardens_lymhurst
+farms_lymhurst
+pastures_lymhurst
+herb_gardens_martlock
+farms_martlock
+pastures_martlock
+herb_gardens_thetford
+farms_thetford
+pastures_thetford
+
+## tiles
+herb_garden_tiles_brecilien
+farm_tiles_brecilien
+pasture_tiles_brecilien
+herb_garden_tiles_bridgewatch
+farm_tiles_bridgewatch
+pasture_tiles_bridgewatch
+herb_garden_tiles_caerleon
+farm_tiles_caerleon
+pasture_tiles_caerleon
+herb_garden_tiles_fort_sterling
+farm_tiles_fort_sterling
+pasture_tiles_fort_sterling
+herb_garden_tiles_lymhurst
+farm_tiles_lymhurst
+pasture_tiles_lymhurst
+herb_garden_tiles_martlock
+farm_tiles_martlock
+pasture_tiles_martlock
+herb_garden_tiles_thetford
+farm_tiles_thetford
+pasture_tiles_thetford
+
+## filled tiles
+agaric_tiles_brecilien
+comfrey_tiles_brecilien
+burdock_tiles_brecilien
+teasel_tiles_brecilien
+foxglove_tiles_brecilien
+muellin_tiles_brecilien
+yarrow_tiles_brecilien
+carrot_tiles_brecilien
+bean_tiles_brecilien
+wheat_tiles_brecilien
+turnip_tiles_brecilien
+cabbage_tiles_brecilien
+potato_tiles_brecilien
+corn_tiles_brecilien
+pumpkin_tiles_brecilien
+baby_chicken_tiles_brecilien
+kid_tiles_brecilien
+gosling_tiles_brecilien
+lamb_tiles_brecilien
+piglet_tiles_brecilien
+calf_tiles_brecilien
+chicken_tiles_brecilien
+goat_tiles_brecilien
+goose_tiles_brecilien
+sheep_tiles_brecilien
+pig_tiles_brecilien
+cow_tiles_brecilien
+agaric_tiles_bridgewatch
+comfrey_tiles_bridgewatch
+burdock_tiles_bridgewatch
+teasel_tiles_bridgewatch
+foxglove_tiles_bridgewatch
+muellin_tiles_bridgewatch
+yarrow_tiles_bridgewatch
+carrot_tiles_bridgewatch
+bean_tiles_bridgewatch
+wheat_tiles_bridgewatch
+turnip_tiles_bridgewatch
+cabbage_tiles_bridgewatch
+potato_tiles_bridgewatch
+corn_tiles_bridgewatch
+pumpkin_tiles_bridgewatch
+baby_chicken_tiles_bridgewatch
+kid_tiles_bridgewatch
+gosling_tiles_bridgewatch
+lamb_tiles_bridgewatch
+piglet_tiles_bridgewatch
+calf_tiles_bridgewatch
+chicken_tiles_bridgewatch
+goat_tiles_bridgewatch
+goose_tiles_bridgewatch
+sheep_tiles_bridgewatch
+pig_tiles_bridgewatch
+cow_tiles_bridgewatch
+agaric_tiles_caerleon
+comfrey_tiles_caerleon
+burdock_tiles_caerleon
+teasel_tiles_caerleon
+foxglove_tiles_caerleon
+muellin_tiles_caerleon
+yarrow_tiles_caerleon
+carrot_tiles_caerleon
+bean_tiles_caerleon
+wheat_tiles_caerleon
+turnip_tiles_caerleon
+cabbage_tiles_caerleon
+potato_tiles_caerleon
+corn_tiles_caerleon
+pumpkin_tiles_caerleon
+baby_chicken_tiles_caerleon
+kid_tiles_caerleon
+gosling_tiles_caerleon
+lamb_tiles_caerleon
+piglet_tiles_caerleon
+calf_tiles_caerleon
+chicken_tiles_caerleon
+goat_tiles_caerleon
+goose_tiles_caerleon
+sheep_tiles_caerleon
+pig_tiles_caerleon
+cow_tiles_caerleon
+agaric_tiles_fort_sterling
+comfrey_tiles_fort_sterling
+burdock_tiles_fort_sterling
+teasel_tiles_fort_sterling
+foxglove_tiles_fort_sterling
+muellin_tiles_fort_sterling
+yarrow_tiles_fort_sterling
+carrot_tiles_fort_sterling
+bean_tiles_fort_sterling
+wheat_tiles_fort_sterling
+turnip_tiles_fort_sterling
+cabbage_tiles_fort_sterling
+potato_tiles_fort_sterling
+corn_tiles_fort_sterling
+pumpkin_tiles_fort_sterling
+baby_chicken_tiles_fort_sterling
+kid_tiles_fort_sterling
+gosling_tiles_fort_sterling
+lamb_tiles_fort_sterling
+piglet_tiles_fort_sterling
+calf_tiles_fort_sterling
+chicken_tiles_fort_sterling
+goat_tiles_fort_sterling
+goose_tiles_fort_sterling
+sheep_tiles_fort_sterling
+pig_tiles_fort_sterling
+cow_tiles_fort_sterling
+agaric_tiles_lymhurst
+comfrey_tiles_lymhurst
+burdock_tiles_lymhurst
+teasel_tiles_lymhurst
+foxglove_tiles_lymhurst
+muellin_tiles_lymhurst
+yarrow_tiles_lymhurst
+carrot_tiles_lymhurst
+bean_tiles_lymhurst
+wheat_tiles_lymhurst
+turnip_tiles_lymhurst
+cabbage_tiles_lymhurst
+potato_tiles_lymhurst
+corn_tiles_lymhurst
+pumpkin_tiles_lymhurst
+baby_chicken_tiles_lymhurst
+kid_tiles_lymhurst
+gosling_tiles_lymhurst
+lamb_tiles_lymhurst
+piglet_tiles_lymhurst
+calf_tiles_lymhurst
+chicken_tiles_lymhurst
+goat_tiles_lymhurst
+goose_tiles_lymhurst
+sheep_tiles_lymhurst
+pig_tiles_lymhurst
+cow_tiles_lymhurst
+agaric_tiles_martlock
+comfrey_tiles_martlock
+burdock_tiles_martlock
+teasel_tiles_martlock
+foxglove_tiles_martlock
+muellin_tiles_martlock
+yarrow_tiles_martlock
+carrot_tiles_martlock
+bean_tiles_martlock
+wheat_tiles_martlock
+turnip_tiles_martlock
+cabbage_tiles_martlock
+potato_tiles_martlock
+corn_tiles_martlock
+pumpkin_tiles_martlock
+baby_chicken_tiles_martlock
+kid_tiles_martlock
+gosling_tiles_martlock
+lamb_tiles_martlock
+piglet_tiles_martlock
+calf_tiles_martlock
+chicken_tiles_martlock
+goat_tiles_martlock
+goose_tiles_martlock
+sheep_tiles_martlock
+pig_tiles_martlock
+cow_tiles_martlock
+agaric_tiles_thetford
+comfrey_tiles_thetford
+burdock_tiles_thetford
+teasel_tiles_thetford
+foxglove_tiles_thetford
+muellin_tiles_thetford
+yarrow_tiles_thetford
+carrot_tiles_thetford
+bean_tiles_thetford
+wheat_tiles_thetford
+turnip_tiles_thetford
+cabbage_tiles_thetford
+potato_tiles_thetford
+corn_tiles_thetford
+pumpkin_tiles_thetford
+baby_chicken_tiles_thetford
+kid_tiles_thetford
+gosling_tiles_thetford
+lamb_tiles_thetford
+piglet_tiles_thetford
+calf_tiles_thetford
+chicken_tiles_thetford
+goat_tiles_thetford
+goose_tiles_thetford
+sheep_tiles_thetford
+pig_tiles_thetford
+cow_tiles_thetford
+
+## products
+agaric_herbs
+comfrey_herbs
+burdock_herbs
+teasel_herbs
+foxglove_herbs
+muellin_herbs
+yarrow_herbs
+carrot_crops
+bean_crops
+wheat_crops
+turnip_crops
+cabbage_crops
+potato_crops
+corn_crops
+pumpkin_crops
+hen_eggs
+goats_milk
+goose_eggs
+sheeps_milk
+cows_milk
+raw_chicken
+raw_goat
+raw_goose
+raw_mutton
+raw_pork
+raw_beef
+
+## final outputs
+minor_energy_potion
+minor_healing_potion
+minor_gigantify_potion
+minor_resistance_potion
+minor_sticky_potion
+minor_poison_potion
+energy_potion
+healing_potion
+gigantify_potion
+resistance_potion
+sticky_potion
+poison_potion
+major_energy_potion
+major_healing_potion
+major_gigantify_potion
+major_resistance_potion
+major_sticky_potion
+major_poison_potion
+invisibility_potion
+chicken_omelette
+goose_omelette
+pork_omelette
+bean_salad
+turnip_salad
+potato_salad
+goat_sandwich
+mutton_sandwich
+beef_sandwich
+carrot_soup
+wheat_soup
+cabbage_soup
+goat_stew
+mutton_stew
+beef_stew
+roast_chicken
+roast_goose
+roast_pork
+
+# constraints
+## argument constraints
+plots_brecilien - PLOTS_BRECILIEN = 0
+plots_bridgewatch - PLOTS_BRIDGEWATCH = 0
+plots_caerleon - PLOTS_CAERLEON = 0
+plots_fort_sterling - PLOTS_FORT_STERLING = 0
+plots_lymhurst - PLOTS_LYMHURST = 0
+plots_martlock - PLOTS_MARTLOCK = 0
+plots_thetford - PLOTS_THETFORD = 0
+
+## plot count constraints
+herb_gardens_brecilien + farms_brecilien + pastures_brecilien - plots_brecilien = 0
+herb_gardens_bridgewatch + farms_bridgewatch + pastures_bridgewatch - plots_bridgewatch = 0
+herb_gardens_caerleon + farms_caerleon + pastures_caerleon - plots_caerleon = 0
+herb_gardens_fort_sterling + farms_fort_sterling + pastures_fort_sterling - plots_fort_sterling = 0
+herb_gardens_lymhurst + farms_lymhurst + pastures_lymhurst - plots_lymhurst = 0
+herb_gardens_martlock + farms_martlock + pastures_martlock - plots_martlock = 0
+herb_gardens_thetford + farms_thetford + pastures_thetford - plots_thetford = 0
+
+## plots to tiles constraints
+TILES_PER_PLOT * herb_gardens_brecilien - herb_garden_tiles_brecilien = 0
+TILES_PER_PLOT * farms_brecilien - farm_tiles_brecilien = 0
+TILES_PER_PLOT * pastures_brecilien - pasture_tiles_brecilien = 0
+TILES_PER_PLOT * herb_gardens_bridgewatch - herb_garden_tiles_bridgewatch = 0
+TILES_PER_PLOT * farms_bridgewatch - farm_tiles_bridgewatch = 0
+TILES_PER_PLOT * pastures_bridgewatch - pasture_tiles_bridgewatch = 0
+TILES_PER_PLOT * herb_gardens_caerleon - herb_garden_tiles_caerleon = 0
+TILES_PER_PLOT * farms_caerleon - farm_tiles_caerleon = 0
+TILES_PER_PLOT * pastures_caerleon - pasture_tiles_caerleon = 0
+TILES_PER_PLOT * herb_gardens_fort_sterling - herb_garden_tiles_fort_sterling = 0
+TILES_PER_PLOT * farms_fort_sterling - farm_tiles_fort_sterling = 0
+TILES_PER_PLOT * pastures_fort_sterling - pasture_tiles_fort_sterling = 0
+TILES_PER_PLOT * herb_gardens_lymhurst - herb_garden_tiles_lymhurst = 0
+TILES_PER_PLOT * farms_lymhurst - farm_tiles_lymhurst = 0
+TILES_PER_PLOT * pastures_lymhurst - pasture_tiles_lymhurst = 0
+TILES_PER_PLOT * herb_gardens_martlock - herb_garden_tiles_martlock = 0
+TILES_PER_PLOT * farms_martlock - farm_tiles_martlock = 0
+TILES_PER_PLOT * pastures_martlock - pasture_tiles_martlock = 0
+TILES_PER_PLOT * herb_gardens_thetford - herb_garden_tiles_thetford = 0
+TILES_PER_PLOT * farms_thetford - farm_tiles_thetford = 0
+TILES_PER_PLOT * pastures_thetford - pasture_tiles_thetford = 0
+
+## tiles to filled tiles constraints
+yarrow_tiles_brecilien + muellin_tiles_brecilien + foxglove_tiles_brecilien + teasel_tiles_brecilien + burdock_tiles_brecilien + comfrey_tiles_brecilien + agaric_tiles_brecilien - herb_garden_tiles_brecilien <= 0
+cow_tiles_brecilien + pig_tiles_brecilien + sheep_tiles_brecilien + goose_tiles_brecilien + goat_tiles_brecilien + chicken_tiles_brecilien + calf_tiles_brecilien + piglet_tiles_brecilien + lamb_tiles_brecilien + gosling_tiles_brecilien + kid_tiles_brecilien + baby_chicken_tiles_brecilien - pasture_tiles_brecilien <= 0
+pumpkin_tiles_brecilien + corn_tiles_brecilien + potato_tiles_brecilien + cabbage_tiles_brecilien + turnip_tiles_brecilien + wheat_tiles_brecilien + bean_tiles_brecilien + carrot_tiles_brecilien - farm_tiles_brecilien <= 0
+yarrow_tiles_bridgewatch + muellin_tiles_bridgewatch + foxglove_tiles_bridgewatch + teasel_tiles_bridgewatch + burdock_tiles_bridgewatch + comfrey_tiles_bridgewatch + agaric_tiles_bridgewatch - herb_garden_tiles_bridgewatch <= 0
+cow_tiles_bridgewatch + pig_tiles_bridgewatch + sheep_tiles_bridgewatch + goose_tiles_bridgewatch + goat_tiles_bridgewatch + chicken_tiles_bridgewatch + calf_tiles_bridgewatch + piglet_tiles_bridgewatch + lamb_tiles_bridgewatch + gosling_tiles_bridgewatch + kid_tiles_bridgewatch + baby_chicken_tiles_bridgewatch - pasture_tiles_bridgewatch <= 0
+pumpkin_tiles_bridgewatch + corn_tiles_bridgewatch + potato_tiles_bridgewatch + cabbage_tiles_bridgewatch + turnip_tiles_bridgewatch + wheat_tiles_bridgewatch + bean_tiles_bridgewatch + carrot_tiles_bridgewatch - farm_tiles_bridgewatch <= 0
+yarrow_tiles_caerleon + muellin_tiles_caerleon + foxglove_tiles_caerleon + teasel_tiles_caerleon + burdock_tiles_caerleon + comfrey_tiles_caerleon + agaric_tiles_caerleon - herb_garden_tiles_caerleon <= 0
+cow_tiles_caerleon + pig_tiles_caerleon + sheep_tiles_caerleon + goose_tiles_caerleon + goat_tiles_caerleon + chicken_tiles_caerleon + calf_tiles_caerleon + piglet_tiles_caerleon + lamb_tiles_caerleon + gosling_tiles_caerleon + kid_tiles_caerleon + baby_chicken_tiles_caerleon - pasture_tiles_caerleon <= 0
+pumpkin_tiles_caerleon + corn_tiles_caerleon + potato_tiles_caerleon + cabbage_tiles_caerleon + turnip_tiles_caerleon + wheat_tiles_caerleon + bean_tiles_caerleon + carrot_tiles_caerleon - farm_tiles_caerleon <= 0
+yarrow_tiles_fort_sterling + muellin_tiles_fort_sterling + foxglove_tiles_fort_sterling + teasel_tiles_fort_sterling + burdock_tiles_fort_sterling + comfrey_tiles_fort_sterling + agaric_tiles_fort_sterling - herb_garden_tiles_fort_sterling <= 0
+cow_tiles_fort_sterling + pig_tiles_fort_sterling + sheep_tiles_fort_sterling + goose_tiles_fort_sterling + goat_tiles_fort_sterling + chicken_tiles_fort_sterling + calf_tiles_fort_sterling + piglet_tiles_fort_sterling + lamb_tiles_fort_sterling + gosling_tiles_fort_sterling + kid_tiles_fort_sterling + baby_chicken_tiles_fort_sterling - pasture_tiles_fort_sterling <= 0
+pumpkin_tiles_fort_sterling + corn_tiles_fort_sterling + potato_tiles_fort_sterling + cabbage_tiles_fort_sterling + turnip_tiles_fort_sterling + wheat_tiles_fort_sterling + bean_tiles_fort_sterling + carrot_tiles_fort_sterling - farm_tiles_fort_sterling <= 0
+yarrow_tiles_lymhurst + muellin_tiles_lymhurst + foxglove_tiles_lymhurst + teasel_tiles_lymhurst + burdock_tiles_lymhurst + comfrey_tiles_lymhurst + agaric_tiles_lymhurst - herb_garden_tiles_lymhurst <= 0
+cow_tiles_lymhurst + pig_tiles_lymhurst + sheep_tiles_lymhurst + goose_tiles_lymhurst + goat_tiles_lymhurst + chicken_tiles_lymhurst + calf_tiles_lymhurst + piglet_tiles_lymhurst + lamb_tiles_lymhurst + gosling_tiles_lymhurst + kid_tiles_lymhurst + baby_chicken_tiles_lymhurst - pasture_tiles_lymhurst <= 0
+pumpkin_tiles_lymhurst + corn_tiles_lymhurst + potato_tiles_lymhurst + cabbage_tiles_lymhurst + turnip_tiles_lymhurst + wheat_tiles_lymhurst + bean_tiles_lymhurst + carrot_tiles_lymhurst - farm_tiles_lymhurst <= 0
+yarrow_tiles_martlock + muellin_tiles_martlock + foxglove_tiles_martlock + teasel_tiles_martlock + burdock_tiles_martlock + comfrey_tiles_martlock + agaric_tiles_martlock - herb_garden_tiles_martlock <= 0
+cow_tiles_martlock + pig_tiles_martlock + sheep_tiles_martlock + goose_tiles_martlock + goat_tiles_martlock + chicken_tiles_martlock + calf_tiles_martlock + piglet_tiles_martlock + lamb_tiles_martlock + gosling_tiles_martlock + kid_tiles_martlock + baby_chicken_tiles_martlock - pasture_tiles_martlock <= 0
+pumpkin_tiles_martlock + corn_tiles_martlock + potato_tiles_martlock + cabbage_tiles_martlock + turnip_tiles_martlock + wheat_tiles_martlock + bean_tiles_martlock + carrot_tiles_martlock - farm_tiles_martlock <= 0
+yarrow_tiles_thetford + muellin_tiles_thetford + foxglove_tiles_thetford + teasel_tiles_thetford + burdock_tiles_thetford + comfrey_tiles_thetford + agaric_tiles_thetford - herb_garden_tiles_thetford <= 0
+cow_tiles_thetford + pig_tiles_thetford + sheep_tiles_thetford + goose_tiles_thetford + goat_tiles_thetford + chicken_tiles_thetford + calf_tiles_thetford + piglet_tiles_thetford + lamb_tiles_thetford + gosling_tiles_thetford + kid_tiles_thetford + baby_chicken_tiles_thetford - pasture_tiles_thetford <= 0
+pumpkin_tiles_thetford + corn_tiles_thetford + potato_tiles_thetford + cabbage_tiles_thetford + turnip_tiles_thetford + wheat_tiles_thetford + bean_tiles_thetford + carrot_tiles_thetford - farm_tiles_thetford <= 0
+
+## filled tiles to products constraints
+### herb constraints
+agaric_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * agaric_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * agaric_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * agaric_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * agaric_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * agaric_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * agaric_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * agaric_tiles_thetford = 0
+comfrey_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * comfrey_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * comfrey_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * comfrey_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * comfrey_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * comfrey_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * comfrey_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * comfrey_tiles_thetford = 0
+burdock_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * burdock_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * burdock_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * burdock_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * burdock_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * burdock_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * burdock_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * burdock_tiles_thetford = 0
+teasel_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * teasel_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * teasel_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * teasel_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * teasel_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * teasel_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * teasel_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * teasel_tiles_thetford = 0
+foxglove_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * foxglove_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * foxglove_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * foxglove_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * foxglove_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * foxglove_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * foxglove_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * foxglove_tiles_thetford = 0
+muellin_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * muellin_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * muellin_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR *  muellin_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * muellin_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * muellin_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * muellin_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * muellin_tiles_thetford = 0
+yarrow_herbs - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * yarrow_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * yarrow_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * yarrow_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * yarrow_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * yarrow_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * yarrow_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * yarrow_tiles_thetford = 0
+
+### crop constraints
+carrot_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * carrot_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * carrot_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * carrot_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * carrot_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * carrot_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * carrot_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * carrot_tiles_thetford = 0
+bean_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * bean_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * bean_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * bean_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * bean_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * bean_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * bean_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * bean_tiles_thetford = 0
+wheat_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * wheat_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * wheat_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * wheat_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * wheat_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * wheat_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * wheat_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * wheat_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * baby_chicken_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * chicken_tiles_thetford = 0
+turnip_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * turnip_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * turnip_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * turnip_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * turnip_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * turnip_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * turnip_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * turnip_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * kid_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goat_tiles_thetford = 0
+cabbage_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * cabbage_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * cabbage_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * cabbage_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * cabbage_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * cabbage_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * cabbage_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * cabbage_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * gosling_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * goose_tiles_thetford = 0
+potato_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * potato_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * potato_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * potato_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * potato_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * potato_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * potato_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * potato_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * lamb_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * sheep_tiles_thetford = 0
+corn_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * corn_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * corn_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * corn_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * corn_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * corn_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * corn_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * corn_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * piglet_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * pig_tiles_thetford = 0
+pumpkin_crops - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * pumpkin_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_brecilien + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_brecilien - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * pumpkin_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_bridgewatch + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_bridgewatch - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * pumpkin_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_caerleon + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_caerleon - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * pumpkin_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_fort_sterling + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_fort_sterling - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * pumpkin_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_lymhurst + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_lymhurst - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * pumpkin_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_martlock + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_martlock - CROP_AND_HERB_FACTOR * PREMIUM_FACTOR * pumpkin_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * calf_tiles_thetford + ANIMAL_FAVORITE_FOOD_CONSUMPTION * cow_tiles_thetford = 0
+
+### animal product constraints
+hen_eggs - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * chicken_tiles_brecilien - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * chicken_tiles_bridgewatch - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * chicken_tiles_caerleon - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * chicken_tiles_fort_sterling - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * chicken_tiles_lymhurst - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * chicken_tiles_martlock - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * chicken_tiles_thetford = 0
+goats_milk - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goat_tiles_brecilien - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * goat_tiles_bridgewatch - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goat_tiles_caerleon - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goat_tiles_fort_sterling - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goat_tiles_lymhurst - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goat_tiles_martlock - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goat_tiles_thetford = 0
+goose_eggs - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goose_tiles_brecilien - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goose_tiles_bridgewatch - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goose_tiles_caerleon - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goose_tiles_fort_sterling - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * goose_tiles_lymhurst - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goose_tiles_martlock - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * goose_tiles_thetford = 0
+sheeps_milk - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * sheep_tiles_brecilien - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * sheep_tiles_bridgewatch - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * sheep_tiles_caerleon - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * sheep_tiles_fort_sterling - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * sheep_tiles_lymhurst - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * sheep_tiles_martlock - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * sheep_tiles_thetford = 0
+cows_milk - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * cow_tiles_brecilien - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * cow_tiles_bridgewatch - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * cow_tiles_caerleon - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * cow_tiles_fort_sterling - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * cow_tiles_lymhurst - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * BONUS_FACTOR * cow_tiles_martlock - ANIMAL_PRODUCT_FACTOR * PREMIUM_FACTOR * cow_tiles_thetford = 0
+
+### meat constraints
+raw_chicken - MEAT_FACTOR * baby_chicken_tiles_brecilien - MEAT_FACTOR * baby_chicken_tiles_bridgewatch - MEAT_FACTOR * baby_chicken_tiles_caerleon - MEAT_FACTOR * BONUS_FACTOR * baby_chicken_tiles_fort_sterling - MEAT_FACTOR * baby_chicken_tiles_lymhurst - MEAT_FACTOR * baby_chicken_tiles_martlock - MEAT_FACTOR * baby_chicken_tiles_thetford = 0
+raw_goat - MEAT_FACTOR * kid_tiles_brecilien - MEAT_FACTOR * BONUS_FACTOR * kid_tiles_bridgewatch - MEAT_FACTOR * kid_tiles_caerleon - MEAT_FACTOR * kid_tiles_fort_sterling - MEAT_FACTOR * kid_tiles_lymhurst - MEAT_FACTOR * kid_tiles_martlock - MEAT_FACTOR * kid_tiles_thetford = 0
+raw_goose - MEAT_FACTOR * gosling_tiles_brecilien - MEAT_FACTOR * gosling_tiles_bridgewatch - MEAT_FACTOR * gosling_tiles_caerleon - MEAT_FACTOR * gosling_tiles_fort_sterling - MEAT_FACTOR * BONUS_FACTOR * gosling_tiles_lymhurst - MEAT_FACTOR * gosling_tiles_martlock - MEAT_FACTOR * gosling_tiles_thetford = 0
+raw_mutton - MEAT_FACTOR * lamb_tiles_brecilien - MEAT_FACTOR * lamb_tiles_bridgewatch - MEAT_FACTOR * lamb_tiles_caerleon - MEAT_FACTOR * BONUS_FACTOR * lamb_tiles_fort_sterling - MEAT_FACTOR * lamb_tiles_lymhurst - MEAT_FACTOR * lamb_tiles_martlock - MEAT_FACTOR * lamb_tiles_thetford = 0
+raw_pork - MEAT_FACTOR * piglet_tiles_brecilien - MEAT_FACTOR * piglet_tiles_bridgewatch - MEAT_FACTOR * piglet_tiles_caerleon - MEAT_FACTOR * piglet_tiles_fort_sterling - MEAT_FACTOR * piglet_tiles_lymhurst - MEAT_FACTOR * piglet_tiles_martlock - MEAT_FACTOR * BONUS_FACTOR * piglet_tiles_thetford = 0
+raw_beef - MEAT_FACTOR * calf_tiles_brecilien - MEAT_FACTOR * calf_tiles_bridgewatch - MEAT_FACTOR * calf_tiles_caerleon - MEAT_FACTOR * calf_tiles_fort_sterling - MEAT_FACTOR * calf_tiles_lymhurst - MEAT_FACTOR * BONUS_FACTOR * calf_tiles_martlock - MEAT_FACTOR * calf_tiles_thetford = 0
+
+### recipe constraints
+minor_energy_potion * POTIONS_PER_CRAFT - agaric_herbs * L04_INGREDIENT = 0
+minor_healing_potion * POTIONS_PER_CRAFT - agaric_herbs * L04_INGREDIENT = 0
+minor_gigantify_potion * POTIONS_PER_CRAFT - comfrey_herbs * L04_INGREDIENT = 0
+minor_resistance_potion * POTIONS_PER_CRAFT - comfrey_herbs * L04_INGREDIENT = 0
+minor_sticky_potion * POTIONS_PER_CRAFT - comfrey_herbs * L04_INGREDIENT = 0
+minor_poison_potion * POTIONS_PER_CRAFT - burdock_herbs * L04_INGREDIENT - comfrey_herbs * L02_INGREDIENT = 0
+energy_potion * POTIONS_PER_CRAFT - burdock_herbs * L08_INGREDIENT  - goats_milk * L03_INGREDIENT = 0
+healing_potion * POTIONS_PER_CRAFT - burdock_herbs * L08_INGREDIENT - hen_eggs * L03_INGREDIENT = 0
+gigantify_potion * POTIONS_PER_CRAFT - teasel_herbs * L08_INGREDIENT - burdock_herbs * L05_INGREDIENT - goose_eggs * L03_INGREDIENT = 0
+resistance_potion * POTIONS_PER_CRAFT - teasel_herbs * L08_INGREDIENT - burdock_herbs * L05_INGREDIENT - goats_milk * L03_INGREDIENT = 0
+sticky_potion * POTIONS_PER_CRAFT - teasel_herbs * L08_INGREDIENT - burdock_herbs * L05_INGREDIENT - goose_eggs * L03_INGREDIENT = 0
+poison_potion * POTIONS_PER_CRAFT - foxglove_herbs * L08_INGREDIENT - teasel_herbs * L05_INGREDIENT - comfrey_herbs * L05_INGREDIENT - sheeps_milk * L03_INGREDIENT = 0
+major_energy_potion * POTIONS_PER_CRAFT - foxglove_herbs * L11_INGREDIENT - sheeps_milk * L07_INGREDIENT - potato_crops * L07_INGREDIENT = 0
+major_healing_potion * POTIONS_PER_CRAFT - foxglove_herbs * L11_INGREDIENT - goose_eggs * L07_INGREDIENT - potato_crops * L07_INGREDIENT = 0
+major_gigantify_potion * POTIONS_PER_CRAFT - muellin_herbs * L11_INGREDIENT - foxglove_herbs * L09_INGREDIENT - goose_eggs * L07_INGREDIENT - corn_crops * L07_INGREDIENT = 0
+major_resistance_potion * POTIONS_PER_CRAFT - muellin_herbs * L11_INGREDIENT - foxglove_herbs * L09_INGREDIENT - burdock_herbs * L09_INGREDIENT - sheeps_milk * L07_INGREDIENT - corn_crops * L07_INGREDIENT = 0
+major_sticky_potion * POTIONS_PER_CRAFT - muellin_herbs * L11_INGREDIENT - foxglove_herbs * L09_INGREDIENT - burdock_herbs * L09_INGREDIENT - goose_eggs * L07_INGREDIENT - corn_crops * L07_INGREDIENT = 0
+major_poison_potion * POTIONS_PER_CRAFT - yarrow_herbs * L11_INGREDIENT - muellin_herbs * L09_INGREDIENT - teasel_herbs * L09_INGREDIENT - cows_milk * L07_INGREDIENT - pumpkin_crops * L07_INGREDIENT = 0
+invisibility_potion * POTIONS_PER_CRAFT - yarrow_herbs * L11_INGREDIENT - muellin_herbs * L09_INGREDIENT - teasel_herbs * L09_INGREDIENT - cows_milk * L07_INGREDIENT - pumpkin_crops * L07_INGREDIENT = 0
+chicken_omelette * FOOD_PER_CRAFT - wheat_crops * L02_INGREDIENT - raw_chicken * L04_INGREDIENT - hen_eggs * L01_INGREDIENT = 0
+goose_omelette * FOOD_PER_CRAFT - cabbage_crops * L05_INGREDIENT - raw_goose * L08_INGREDIENT - goose_eggs * L03_INGREDIENT = 0
+pork_omelette * FOOD_PER_CRAFT - corn_crops * L09_INGREDIENT - raw_pork * L11_INGREDIENT - goose_eggs * L07_INGREDIENT = 0
+bean_salad * FOOD_PER_CRAFT - bean_crops * L04_INGREDIENT - carrot_crops * L04_INGREDIENT = 0
+turnip_salad * FOOD_PER_CRAFT - turnip_crops * L08_INGREDIENT - wheat_crops * L08_INGREDIENT = 0
+potato_salad * FOOD_PER_CRAFT - potato_crops * L11_INGREDIENT - cabbage_crops * L11_INGREDIENT = 0
+goat_sandwich * FOOD_PER_CRAFT - wheat_crops * L02_INGREDIENT - raw_goat * L04_INGREDIENT - goats_milk * L01_INGREDIENT = 0
+mutton_sandwich * FOOD_PER_CRAFT - wheat_crops * L05_INGREDIENT - raw_mutton * L08_INGREDIENT - sheeps_milk * L03_INGREDIENT = 0
+beef_sandwich * FOOD_PER_CRAFT - wheat_crops * L09_INGREDIENT - raw_beef * L11_INGREDIENT - cows_milk * L07_INGREDIENT = 0
+carrot_soup * FOOD_PER_CRAFT - carrot_crops * L06_INGREDIENT = 0
+wheat_soup * FOOD_PER_CRAFT - wheat_crops * L10_INGREDIENT = 0
+cabbage_soup * FOOD_PER_CRAFT - cabbage_crops * L12_INGREDIENT = 0
+goat_stew * FOOD_PER_CRAFT - wheat_crops * L02_INGREDIENT - raw_goat * L04_INGREDIENT - turnip_crops * L02_INGREDIENT = 0
+mutton_stew * FOOD_PER_CRAFT - wheat_crops * L05_INGREDIENT - raw_mutton * L08_INGREDIENT - potato_crops * L05_INGREDIENT = 0
+beef_stew * FOOD_PER_CRAFT - pumpkin_crops * L09_INGREDIENT - raw_beef * L11_INGREDIENT - wheat_crops * L09_INGREDIENT = 0
+roast_chicken * FOOD_PER_CRAFT - raw_chicken * L04_INGREDIENT - bean_crops * L02_INGREDIENT - goats_milk * L02_INGREDIENT = 0
+roast_goose * FOOD_PER_CRAFT - raw_goose * L08_INGREDIENT - cabbage_crops * L05_INGREDIENT - sheeps_milk * L05_INGREDIENT = 0
+roast_pork * FOOD_PER_CRAFT - raw_pork * L11_INGREDIENT - corn_crops * L09_INGREDIENT - cows_milk * L09_INGREDIENT = 0
