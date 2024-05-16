@@ -147,7 +147,6 @@ fn main() {
         .expect("target is required");
 
     // Display input conditions
-    println!("Inputs");
     println!("Brecilien Plots: {:?}", brecilien_plots);
     println!("Bridgewatch Plots: {:?}", bridgewatch_plots);
     println!("Caerleon Plots: {:?}", caerleon_plots);
