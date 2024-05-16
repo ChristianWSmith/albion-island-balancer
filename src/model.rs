@@ -1,55 +1,6 @@
-use minilp::{Problem, OptimizationDirection, ComparisonOp, Solution};
-
-
+use minilp::{Problem, OptimizationDirection, ComparisonOp};
 use crate::{constants::*, types::{PlotPlan, Product}, ModelContext};
 
- 
-// pub fn optimize_plots(context: ModelContext) -> Solution {
-//     let mut problem = Problem::new(OptimizationDirection::Maximize);
-
-//     let plots_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let herb_gardens_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let farms_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let pastures_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let herb_garden_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let farm_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let pasture_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let teasel_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let muellin_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let yarrow_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let pumpkin_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let cow_tiles_lymhurst = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let teasel_herbs = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let muellin_herbs = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let yarrow_herbs = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let pumpkin_crops = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let cows_milk = problem.add_var(0.0, (0.0, f64::INFINITY));
-//     let major_poison_potion = problem.add_var(if context.target == Product::MajorPoisonPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-
-//     problem.add_constraint(&[(plots_lymhurst, 1.0)], ComparisonOp::Eq, context.lymhurst_plots);
-//     problem.add_constraint(&[(herb_gardens_lymhurst, 1.0), (farms_lymhurst, 1.0), (pastures_lymhurst, 1.0), (plots_lymhurst, -1.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(herb_gardens_lymhurst, TILES_PER_PLOT), (herb_garden_tiles_lymhurst, -1.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(farms_lymhurst, TILES_PER_PLOT), (farm_tiles_lymhurst, -1.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(pastures_lymhurst, TILES_PER_PLOT), (pasture_tiles_lymhurst, -1.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(yarrow_tiles_lymhurst, 1.0), (muellin_tiles_lymhurst, 1.0), (teasel_tiles_lymhurst, 1.0), (herb_garden_tiles_lymhurst, -1.0)], ComparisonOp::Le, 0.0);
-//     problem.add_constraint(&[(cow_tiles_lymhurst, 1.0), (pasture_tiles_lymhurst, -1.0)], ComparisonOp::Le, 0.0);
-//     problem.add_constraint(&[(pumpkin_tiles_lymhurst, 1.0), (farm_tiles_lymhurst, -1.0)], ComparisonOp::Le, 0.0);
-//     problem.add_constraint(&[(teasel_herbs, 1.0), (teasel_tiles_lymhurst, -1.0 * CROP_AND_HERB_FACTOR * context.premium_factor)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(muellin_herbs, 1.0), (muellin_tiles_lymhurst, -1.0 * CROP_AND_HERB_FACTOR * context.premium_factor)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(yarrow_herbs, 1.0), (yarrow_tiles_lymhurst, -1.0 * CROP_AND_HERB_FACTOR * context.premium_factor)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(pumpkin_crops, 1.0), (pumpkin_tiles_lymhurst, -1.0 * CROP_AND_HERB_FACTOR * context.premium_factor * BONUS_FACTOR), (cow_tiles_lymhurst, ANIMAL_FAVORITE_FOOD_CONSUMPTION)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(cows_milk, 1.0), (cow_tiles_lymhurst, -1.0 * ANIMAL_PRODUCT_FACTOR * context.premium_factor)], ComparisonOp::Eq, 0.0);
-    
-//     problem.add_constraint(&[(cows_milk, 1.0), (pumpkin_crops, -1.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(teasel_herbs, 1.0), (cows_milk, -2.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(muellin_herbs, 1.0), (teasel_herbs, -1.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(yarrow_herbs, 1.0), (muellin_herbs, -2.0)], ComparisonOp::Eq, 0.0);
-//     problem.add_constraint(&[(major_poison_potion, L11_INGREDIENT), (yarrow_herbs, -1.0 * POTIONS_PER_CRAFT)], ComparisonOp::Eq, 0.0);
-        
-//     let solution = problem.solve().unwrap();
-    
-//     solution
-// }
 
 pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     let mut problem = Problem::new(OptimizationDirection::Maximize);
