@@ -1,6 +1,5 @@
 use clap::ValueEnum;
 use regex::Regex;
-use std::fmt;
 
 #[derive(PartialEq, ValueEnum, Clone, Debug)]
 pub enum PremiumStatus {

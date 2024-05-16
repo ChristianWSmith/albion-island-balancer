@@ -2016,8 +2016,6 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     );
 
     ////// recipe constraints
-    // TODO: fix recipe constraints to work like the commented out section above
-
     match context.target {
         Product::MinorEnergyPotion => {
             problem.add_constraint(
@@ -3083,6 +3081,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
 
     let solution = problem.solve().unwrap();
 
+    // pack up the plot plan
     let plot_plan = PlotPlan {
         output: solution.objective().round(),
 
