@@ -328,7 +328,6 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     let raw_beef = problem.add_var(0.0, (0.0, f64::INFINITY));
 
     //// products
-    // TODO: do this better
     let mut minor_energy_potion_objective_value: f64 = 0.0;
     let mut minor_healing_potion_objective_value: f64 = 0.0;
     let mut minor_gigantify_potion_objective_value: f64 = 0.0;
@@ -1040,6 +1039,6 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         pig_tiles_thetford: solution[pig_tiles_thetford].ceil(),
         cow_tiles_thetford: solution[cow_tiles_thetford].ceil(),
     };
-    
+
     plot_plan
 }
