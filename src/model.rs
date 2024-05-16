@@ -2890,7 +2890,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     // constrain patches
     // TODO: see if there's a better way than using .round()
     problem.add_constraint(
-        &[(herb_gardens_brecilien, 1.0)],
+        &[(
+            herb_gardens_brecilien,
+            if solution[herb_gardens_brecilien] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_brecilien] == 0.0 {
             0.0
@@ -2899,7 +2906,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_brecilien, 1.0)],
+        &[(
+            farms_brecilien,
+            if solution[farms_brecilien] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_brecilien] == 0.0 {
             0.0
@@ -2908,7 +2922,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_brecilien, 1.0)],
+        &[(
+            pastures_brecilien,
+            if solution[pastures_brecilien] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_brecilien] == 0.0 {
             0.0
@@ -2917,7 +2938,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(herb_gardens_bridgewatch, 1.0)],
+        &[(
+            herb_gardens_bridgewatch,
+            if solution[herb_gardens_bridgewatch] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_bridgewatch] == 0.0 {
             0.0
@@ -2926,7 +2954,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_bridgewatch, 1.0)],
+        &[(
+            farms_bridgewatch,
+            if solution[farms_bridgewatch] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_bridgewatch] == 0.0 {
             0.0
@@ -2935,7 +2970,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_bridgewatch, 1.0)],
+        &[(
+            pastures_bridgewatch,
+            if solution[pastures_bridgewatch] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_bridgewatch] == 0.0 {
             0.0
@@ -2944,7 +2986,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(herb_gardens_caerleon, 1.0)],
+        &[(
+            herb_gardens_caerleon,
+            if solution[herb_gardens_caerleon] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_caerleon] == 0.0 {
             0.0
@@ -2953,7 +3002,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_caerleon, 1.0)],
+        &[(
+            farms_caerleon,
+            if solution[farms_caerleon] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_caerleon] == 0.0 {
             0.0
@@ -2962,7 +3018,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_caerleon, 1.0)],
+        &[(
+            pastures_caerleon,
+            if solution[pastures_caerleon] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_caerleon] == 0.0 {
             0.0
@@ -2971,7 +3034,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(herb_gardens_fort_sterling, 1.0)],
+        &[(
+            herb_gardens_fort_sterling,
+            if solution[herb_gardens_fort_sterling] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_fort_sterling] == 0.0 {
             0.0
@@ -2980,7 +3050,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_fort_sterling, 1.0)],
+        &[(
+            farms_fort_sterling,
+            if solution[farms_fort_sterling] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_fort_sterling] == 0.0 {
             0.0
@@ -2989,7 +3066,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_fort_sterling, 1.0)],
+        &[(
+            pastures_fort_sterling,
+            if solution[pastures_fort_sterling] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_fort_sterling] == 0.0 {
             0.0
@@ -2998,7 +3082,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(herb_gardens_lymhurst, 1.0)],
+        &[(
+            herb_gardens_lymhurst,
+            if solution[herb_gardens_lymhurst] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_lymhurst] == 0.0 {
             0.0
@@ -3007,7 +3098,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_lymhurst, 1.0)],
+        &[(
+            farms_lymhurst,
+            if solution[farms_lymhurst] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_lymhurst] == 0.0 {
             0.0
@@ -3016,7 +3114,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_lymhurst, 1.0)],
+        &[(
+            pastures_lymhurst,
+            if solution[pastures_lymhurst] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_lymhurst] == 0.0 {
             0.0
@@ -3025,7 +3130,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(herb_gardens_martlock, 1.0)],
+        &[(
+            herb_gardens_martlock,
+            if solution[herb_gardens_martlock] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_martlock] == 0.0 {
             0.0
@@ -3034,7 +3146,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_martlock, 1.0)],
+        &[(
+            farms_martlock,
+            if solution[farms_martlock] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_martlock] == 0.0 {
             0.0
@@ -3043,7 +3162,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_martlock, 1.0)],
+        &[(
+            pastures_martlock,
+            if solution[pastures_martlock] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_martlock] == 0.0 {
             0.0
@@ -3052,7 +3178,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(herb_gardens_thetford, 1.0)],
+        &[(
+            herb_gardens_thetford,
+            if solution[herb_gardens_thetford] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[herb_gardens_thetford] == 0.0 {
             0.0
@@ -3061,7 +3194,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(farms_thetford, 1.0)],
+        &[(
+            farms_thetford,
+            if solution[farms_thetford] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[farms_thetford] == 0.0 {
             0.0
@@ -3070,7 +3210,14 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         },
     );
     problem.add_constraint(
-        &[(pastures_thetford, 1.0)],
+        &[(
+            pastures_thetford,
+            if solution[pastures_thetford] == 0.0 {
+                10.0
+            } else {
+                1.0
+            },
+        )],
         ComparisonOp::Eq,
         if solution[pastures_thetford] == 0.0 {
             0.0
