@@ -1,7 +1,7 @@
 use minilp::{Problem, OptimizationDirection, ComparisonOp, Solution};
 
 
-use crate::{constants::*, types::Product, ModelContext};
+use crate::{constants::*, types::{PlotPlan, Product}, ModelContext};
 
  
 // pub fn optimize_plots(context: ModelContext) -> Solution {
@@ -51,7 +51,7 @@ use crate::{constants::*, types::Product, ModelContext};
 //     solution
 // }
 
-pub fn optimize_plots(context: ModelContext) -> Solution {
+pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     let mut problem = Problem::new(OptimizationDirection::Maximize);
 
     // variables
@@ -552,13 +552,13 @@ pub fn optimize_plots(context: ModelContext) -> Solution {
     problem.add_constraint(&[(plots_thetford, 1.0)], ComparisonOp::Eq, context.thetford_plots);
 
     //// plot count constraints
-    problem.add_constraint(&[(herb_gardens_brecilien, 1.0), (farms_brecilien, 1.0), (pastures_brecilien, 1.0), (plots_brecilien, -1.0)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(herb_gardens_bridgewatch, 1.0), (farms_bridgewatch, 1.0), (pastures_bridgewatch, 1.0), (plots_bridgewatch, -1.0)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(herb_gardens_caerleon, 1.0), (farms_caerleon, 1.0), (pastures_caerleon, 1.0), (plots_caerleon, -1.0)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(herb_gardens_fort_sterling, 1.0), (farms_fort_sterling, 1.0), (pastures_fort_sterling, 1.0), (plots_fort_sterling, -1.0)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(herb_gardens_lymhurst, 1.0), (farms_lymhurst, 1.0), (pastures_lymhurst, 1.0), (plots_lymhurst, -1.0)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(herb_gardens_martlock, 1.0), (farms_martlock, 1.0), (pastures_martlock, 1.0), (plots_martlock, -1.0)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(herb_gardens_thetford, 1.0), (farms_thetford, 1.0), (pastures_thetford, 1.0), (plots_thetford, -1.0)], ComparisonOp::Eq, 0.0);
+    problem.add_constraint(&[(herb_gardens_brecilien, 1.0), (farms_brecilien, 1.0), (pastures_brecilien, 1.0), (plots_brecilien, -1.0)], ComparisonOp::Le, 0.0);
+    problem.add_constraint(&[(herb_gardens_bridgewatch, 1.0), (farms_bridgewatch, 1.0), (pastures_bridgewatch, 1.0), (plots_bridgewatch, -1.0)], ComparisonOp::Le, 0.0);
+    problem.add_constraint(&[(herb_gardens_caerleon, 1.0), (farms_caerleon, 1.0), (pastures_caerleon, 1.0), (plots_caerleon, -1.0)], ComparisonOp::Le, 0.0);
+    problem.add_constraint(&[(herb_gardens_fort_sterling, 1.0), (farms_fort_sterling, 1.0), (pastures_fort_sterling, 1.0), (plots_fort_sterling, -1.0)], ComparisonOp::Le, 0.0);
+    problem.add_constraint(&[(herb_gardens_lymhurst, 1.0), (farms_lymhurst, 1.0), (pastures_lymhurst, 1.0), (plots_lymhurst, -1.0)], ComparisonOp::Le, 0.0);
+    problem.add_constraint(&[(herb_gardens_martlock, 1.0), (farms_martlock, 1.0), (pastures_martlock, 1.0), (plots_martlock, -1.0)], ComparisonOp::Le, 0.0);
+    problem.add_constraint(&[(herb_gardens_thetford, 1.0), (farms_thetford, 1.0), (pastures_thetford, 1.0), (plots_thetford, -1.0)], ComparisonOp::Le, 0.0);
 
     //// plots to tiles constraints
     problem.add_constraint(&[(herb_gardens_brecilien, TILES_PER_PLOT), (herb_garden_tiles_brecilien, -1.0)], ComparisonOp::Eq, 0.0);
@@ -799,13 +799,247 @@ pub fn optimize_plots(context: ModelContext) -> Solution {
     }
 
     let solution = problem.solve().unwrap();
-    println!("herb_gardens_lymhurst {}", solution[herb_gardens_lymhurst]);
-    println!("pastures_lymhurst {}", solution[pastures_lymhurst]);
-    println!("farms_lymhurst {}", solution[farms_lymhurst]);
-    println!("teasel_tiles_lymhurst {}", solution[teasel_tiles_lymhurst]);
-    println!("muellin_tiles_lymhurst {}", solution[muellin_tiles_lymhurst]);
-    println!("yarrow_tiles_lymhurst {}", solution[yarrow_tiles_lymhurst]);
-    println!("cow_tiles_lymhurst {}", solution[cow_tiles_lymhurst]);
-    println!("pumpkin_tiles_lymhurst {}", solution[pumpkin_tiles_lymhurst]);
-    solution
+
+    // constrain patches
+    problem.add_constraint(&[(herb_gardens_brecilien, 1.0)], ComparisonOp::Eq, solution[herb_gardens_brecilien].floor());
+    problem.add_constraint(&[(farms_brecilien, 1.0)], ComparisonOp::Eq, solution[farms_brecilien].floor());
+    problem.add_constraint(&[(pastures_brecilien, 1.0)], ComparisonOp::Eq, solution[pastures_brecilien].floor());
+    problem.add_constraint(&[(herb_gardens_bridgewatch, 1.0)], ComparisonOp::Eq, solution[herb_gardens_bridgewatch].floor());
+    problem.add_constraint(&[(farms_bridgewatch, 1.0)], ComparisonOp::Eq, solution[farms_bridgewatch].floor());
+    problem.add_constraint(&[(pastures_bridgewatch, 1.0)], ComparisonOp::Eq, solution[pastures_bridgewatch].floor());
+    problem.add_constraint(&[(herb_gardens_caerleon, 1.0)], ComparisonOp::Eq, solution[herb_gardens_caerleon].floor());
+    problem.add_constraint(&[(farms_caerleon, 1.0)], ComparisonOp::Eq, solution[farms_caerleon].floor());
+    problem.add_constraint(&[(pastures_caerleon, 1.0)], ComparisonOp::Eq, solution[pastures_caerleon].floor());
+    problem.add_constraint(&[(herb_gardens_fort_sterling, 1.0)], ComparisonOp::Eq, solution[herb_gardens_fort_sterling].floor());
+    problem.add_constraint(&[(farms_fort_sterling, 1.0)], ComparisonOp::Eq, solution[farms_fort_sterling].floor());
+    problem.add_constraint(&[(pastures_fort_sterling, 1.0)], ComparisonOp::Eq, solution[pastures_fort_sterling].floor());
+    problem.add_constraint(&[(herb_gardens_lymhurst, 1.0)], ComparisonOp::Eq, solution[herb_gardens_lymhurst].floor());
+    problem.add_constraint(&[(farms_lymhurst, 1.0)], ComparisonOp::Eq, solution[farms_lymhurst].floor());
+    problem.add_constraint(&[(pastures_lymhurst, 1.0)], ComparisonOp::Eq, solution[pastures_lymhurst].floor());
+    problem.add_constraint(&[(herb_gardens_martlock, 1.0)], ComparisonOp::Eq, solution[herb_gardens_martlock].floor());
+    problem.add_constraint(&[(farms_martlock, 1.0)], ComparisonOp::Eq, solution[farms_martlock].floor());
+    problem.add_constraint(&[(pastures_martlock, 1.0)], ComparisonOp::Eq, solution[pastures_martlock].floor());
+    problem.add_constraint(&[(herb_gardens_thetford, 1.0)], ComparisonOp::Eq, solution[herb_gardens_thetford].floor());
+    problem.add_constraint(&[(farms_thetford, 1.0)], ComparisonOp::Eq, solution[farms_thetford].floor());
+    problem.add_constraint(&[(pastures_thetford, 1.0)], ComparisonOp::Eq, solution[pastures_thetford].floor());
+
+    let solution = problem.solve().unwrap();
+
+    let plot_plan = PlotPlan {
+        output: solution.objective().floor(),
+
+        herb_gardens_brecilien: solution[herb_gardens_brecilien].ceil(),
+        farms_brecilien: solution[farms_brecilien].ceil(),
+        pastures_brecilien: solution[pastures_brecilien].ceil(),
+        herb_gardens_bridgewatch: solution[herb_gardens_bridgewatch].ceil(),
+        farms_bridgewatch: solution[farms_bridgewatch].ceil(),
+        pastures_bridgewatch: solution[pastures_bridgewatch].ceil(),
+        herb_gardens_caerleon: solution[herb_gardens_caerleon].ceil(),
+        farms_caerleon: solution[farms_caerleon].ceil(),
+        pastures_caerleon: solution[pastures_caerleon].ceil(),
+        herb_gardens_fort_sterling: solution[herb_gardens_fort_sterling].ceil(),
+        farms_fort_sterling: solution[farms_fort_sterling].ceil(),
+        pastures_fort_sterling: solution[pastures_fort_sterling].ceil(),
+        herb_gardens_lymhurst: solution[herb_gardens_lymhurst].ceil(),
+        farms_lymhurst: solution[farms_lymhurst].ceil(),
+        pastures_lymhurst: solution[pastures_lymhurst].ceil(),
+        herb_gardens_martlock: solution[herb_gardens_martlock].ceil(),
+        farms_martlock: solution[farms_martlock].ceil(),
+        pastures_martlock: solution[pastures_martlock].ceil(),
+        herb_gardens_thetford: solution[herb_gardens_thetford].ceil(),
+        farms_thetford: solution[farms_thetford].ceil(),
+        pastures_thetford: solution[pastures_thetford].ceil(),
+        
+        agaric_tiles_brecilien: solution[agaric_tiles_brecilien].ceil(),
+        comfrey_tiles_brecilien: solution[comfrey_tiles_brecilien].ceil(),
+        burdock_tiles_brecilien: solution[burdock_tiles_brecilien].ceil(),
+        teasel_tiles_brecilien: solution[teasel_tiles_brecilien].ceil(),
+        foxglove_tiles_brecilien: solution[foxglove_tiles_brecilien].ceil(),
+        muellin_tiles_brecilien: solution[muellin_tiles_brecilien].ceil(),
+        yarrow_tiles_brecilien: solution[yarrow_tiles_brecilien].ceil(),
+        carrot_tiles_brecilien: solution[carrot_tiles_brecilien].ceil(),
+        bean_tiles_brecilien: solution[bean_tiles_brecilien].ceil(),
+        wheat_tiles_brecilien: solution[wheat_tiles_brecilien].ceil(),
+        turnip_tiles_brecilien: solution[turnip_tiles_brecilien].ceil(),
+        cabbage_tiles_brecilien: solution[cabbage_tiles_brecilien].ceil(),
+        potato_tiles_brecilien: solution[potato_tiles_brecilien].ceil(),
+        corn_tiles_brecilien: solution[corn_tiles_brecilien].ceil(),
+        pumpkin_tiles_brecilien: solution[pumpkin_tiles_brecilien].ceil(),
+        baby_chicken_tiles_brecilien: solution[baby_chicken_tiles_brecilien].ceil(),
+        kid_tiles_brecilien: solution[kid_tiles_brecilien].ceil(),
+        gosling_tiles_brecilien: solution[gosling_tiles_brecilien].ceil(),
+        lamb_tiles_brecilien: solution[lamb_tiles_brecilien].ceil(),
+        piglet_tiles_brecilien: solution[piglet_tiles_brecilien].ceil(),
+        calf_tiles_brecilien: solution[calf_tiles_brecilien].ceil(),
+        chicken_tiles_brecilien: solution[chicken_tiles_brecilien].ceil(),
+        goat_tiles_brecilien: solution[goat_tiles_brecilien].ceil(),
+        goose_tiles_brecilien: solution[goose_tiles_brecilien].ceil(),
+        sheep_tiles_brecilien: solution[sheep_tiles_brecilien].ceil(),
+        pig_tiles_brecilien: solution[pig_tiles_brecilien].ceil(),
+        cow_tiles_brecilien: solution[cow_tiles_brecilien].ceil(),
+        agaric_tiles_bridgewatch: solution[agaric_tiles_bridgewatch].ceil(),
+        comfrey_tiles_bridgewatch: solution[comfrey_tiles_bridgewatch].ceil(),
+        burdock_tiles_bridgewatch: solution[burdock_tiles_bridgewatch].ceil(),
+        teasel_tiles_bridgewatch: solution[teasel_tiles_bridgewatch].ceil(),
+        foxglove_tiles_bridgewatch: solution[foxglove_tiles_bridgewatch].ceil(),
+        muellin_tiles_bridgewatch: solution[muellin_tiles_bridgewatch].ceil(),
+        yarrow_tiles_bridgewatch: solution[yarrow_tiles_bridgewatch].ceil(),
+        carrot_tiles_bridgewatch: solution[carrot_tiles_bridgewatch].ceil(),
+        bean_tiles_bridgewatch: solution[bean_tiles_bridgewatch].ceil(),
+        wheat_tiles_bridgewatch: solution[wheat_tiles_bridgewatch].ceil(),
+        turnip_tiles_bridgewatch: solution[turnip_tiles_bridgewatch].ceil(),
+        cabbage_tiles_bridgewatch: solution[cabbage_tiles_bridgewatch].ceil(),
+        potato_tiles_bridgewatch: solution[potato_tiles_bridgewatch].ceil(),
+        corn_tiles_bridgewatch: solution[corn_tiles_bridgewatch].ceil(),
+        pumpkin_tiles_bridgewatch: solution[pumpkin_tiles_bridgewatch].ceil(),
+        baby_chicken_tiles_bridgewatch: solution[baby_chicken_tiles_bridgewatch].ceil(),
+        kid_tiles_bridgewatch: solution[kid_tiles_bridgewatch].ceil(),
+        gosling_tiles_bridgewatch: solution[gosling_tiles_bridgewatch].ceil(),
+        lamb_tiles_bridgewatch: solution[lamb_tiles_bridgewatch].ceil(),
+        piglet_tiles_bridgewatch: solution[piglet_tiles_bridgewatch].ceil(),
+        calf_tiles_bridgewatch: solution[calf_tiles_bridgewatch].ceil(),
+        chicken_tiles_bridgewatch: solution[chicken_tiles_bridgewatch].ceil(),
+        goat_tiles_bridgewatch: solution[goat_tiles_bridgewatch].ceil(),
+        goose_tiles_bridgewatch: solution[goose_tiles_bridgewatch].ceil(),
+        sheep_tiles_bridgewatch: solution[sheep_tiles_bridgewatch].ceil(),
+        pig_tiles_bridgewatch: solution[pig_tiles_bridgewatch].ceil(),
+        cow_tiles_bridgewatch: solution[cow_tiles_bridgewatch].ceil(),
+        agaric_tiles_caerleon: solution[agaric_tiles_caerleon].ceil(),
+        comfrey_tiles_caerleon: solution[comfrey_tiles_caerleon].ceil(),
+        burdock_tiles_caerleon: solution[burdock_tiles_caerleon].ceil(),
+        teasel_tiles_caerleon: solution[teasel_tiles_caerleon].ceil(),
+        foxglove_tiles_caerleon: solution[foxglove_tiles_caerleon].ceil(),
+        muellin_tiles_caerleon: solution[muellin_tiles_caerleon].ceil(),
+        yarrow_tiles_caerleon: solution[yarrow_tiles_caerleon].ceil(),
+        carrot_tiles_caerleon: solution[carrot_tiles_caerleon].ceil(),
+        bean_tiles_caerleon: solution[bean_tiles_caerleon].ceil(),
+        wheat_tiles_caerleon: solution[wheat_tiles_caerleon].ceil(),
+        turnip_tiles_caerleon: solution[turnip_tiles_caerleon].ceil(),
+        cabbage_tiles_caerleon: solution[cabbage_tiles_caerleon].ceil(),
+        potato_tiles_caerleon: solution[potato_tiles_caerleon].ceil(),
+        corn_tiles_caerleon: solution[corn_tiles_caerleon].ceil(),
+        pumpkin_tiles_caerleon: solution[pumpkin_tiles_caerleon].ceil(),
+        baby_chicken_tiles_caerleon: solution[baby_chicken_tiles_caerleon].ceil(),
+        kid_tiles_caerleon: solution[kid_tiles_caerleon].ceil(),
+        gosling_tiles_caerleon: solution[gosling_tiles_caerleon].ceil(),
+        lamb_tiles_caerleon: solution[lamb_tiles_caerleon].ceil(),
+        piglet_tiles_caerleon: solution[piglet_tiles_caerleon].ceil(),
+        calf_tiles_caerleon: solution[calf_tiles_caerleon].ceil(),
+        chicken_tiles_caerleon: solution[chicken_tiles_caerleon].ceil(),
+        goat_tiles_caerleon: solution[goat_tiles_caerleon].ceil(),
+        goose_tiles_caerleon: solution[goose_tiles_caerleon].ceil(),
+        sheep_tiles_caerleon: solution[sheep_tiles_caerleon].ceil(),
+        pig_tiles_caerleon: solution[pig_tiles_caerleon].ceil(),
+        cow_tiles_caerleon: solution[cow_tiles_caerleon].ceil(),
+        agaric_tiles_fort_sterling: solution[agaric_tiles_fort_sterling].ceil(),
+        comfrey_tiles_fort_sterling: solution[comfrey_tiles_fort_sterling].ceil(),
+        burdock_tiles_fort_sterling: solution[burdock_tiles_fort_sterling].ceil(),
+        teasel_tiles_fort_sterling: solution[teasel_tiles_fort_sterling].ceil(),
+        foxglove_tiles_fort_sterling: solution[foxglove_tiles_fort_sterling].ceil(),
+        muellin_tiles_fort_sterling: solution[muellin_tiles_fort_sterling].ceil(),
+        yarrow_tiles_fort_sterling: solution[yarrow_tiles_fort_sterling].ceil(),
+        carrot_tiles_fort_sterling: solution[carrot_tiles_fort_sterling].ceil(),
+        bean_tiles_fort_sterling: solution[bean_tiles_fort_sterling].ceil(),
+        wheat_tiles_fort_sterling: solution[wheat_tiles_fort_sterling].ceil(),
+        turnip_tiles_fort_sterling: solution[turnip_tiles_fort_sterling].ceil(),
+        cabbage_tiles_fort_sterling: solution[cabbage_tiles_fort_sterling].ceil(),
+        potato_tiles_fort_sterling: solution[potato_tiles_fort_sterling].ceil(),
+        corn_tiles_fort_sterling: solution[corn_tiles_fort_sterling].ceil(),
+        pumpkin_tiles_fort_sterling: solution[pumpkin_tiles_fort_sterling].ceil(),
+        baby_chicken_tiles_fort_sterling: solution[baby_chicken_tiles_fort_sterling].ceil(),
+        kid_tiles_fort_sterling: solution[kid_tiles_fort_sterling].ceil(),
+        gosling_tiles_fort_sterling: solution[gosling_tiles_fort_sterling].ceil(),
+        lamb_tiles_fort_sterling: solution[lamb_tiles_fort_sterling].ceil(),
+        piglet_tiles_fort_sterling: solution[piglet_tiles_fort_sterling].ceil(),
+        calf_tiles_fort_sterling: solution[calf_tiles_fort_sterling].ceil(),
+        chicken_tiles_fort_sterling: solution[chicken_tiles_fort_sterling].ceil(),
+        goat_tiles_fort_sterling: solution[goat_tiles_fort_sterling].ceil(),
+        goose_tiles_fort_sterling: solution[goose_tiles_fort_sterling].ceil(),
+        sheep_tiles_fort_sterling: solution[sheep_tiles_fort_sterling].ceil(),
+        pig_tiles_fort_sterling: solution[pig_tiles_fort_sterling].ceil(),
+        cow_tiles_fort_sterling: solution[cow_tiles_fort_sterling].ceil(),
+        agaric_tiles_lymhurst: solution[agaric_tiles_lymhurst].ceil(),
+        comfrey_tiles_lymhurst: solution[comfrey_tiles_lymhurst].ceil(),
+        burdock_tiles_lymhurst: solution[burdock_tiles_lymhurst].ceil(),
+        teasel_tiles_lymhurst: solution[teasel_tiles_lymhurst].ceil(),
+        foxglove_tiles_lymhurst: solution[foxglove_tiles_lymhurst].ceil(),
+        muellin_tiles_lymhurst: solution[muellin_tiles_lymhurst].ceil(),
+        yarrow_tiles_lymhurst: solution[yarrow_tiles_lymhurst].ceil(),
+        carrot_tiles_lymhurst: solution[carrot_tiles_lymhurst].ceil(),
+        bean_tiles_lymhurst: solution[bean_tiles_lymhurst].ceil(),
+        wheat_tiles_lymhurst: solution[wheat_tiles_lymhurst].ceil(),
+        turnip_tiles_lymhurst: solution[turnip_tiles_lymhurst].ceil(),
+        cabbage_tiles_lymhurst: solution[cabbage_tiles_lymhurst].ceil(),
+        potato_tiles_lymhurst: solution[potato_tiles_lymhurst].ceil(),
+        corn_tiles_lymhurst: solution[corn_tiles_lymhurst].ceil(),
+        pumpkin_tiles_lymhurst: solution[pumpkin_tiles_lymhurst].ceil(),
+        baby_chicken_tiles_lymhurst: solution[baby_chicken_tiles_lymhurst].ceil(),
+        kid_tiles_lymhurst: solution[kid_tiles_lymhurst].ceil(),
+        gosling_tiles_lymhurst: solution[gosling_tiles_lymhurst].ceil(),
+        lamb_tiles_lymhurst: solution[lamb_tiles_lymhurst].ceil(),
+        piglet_tiles_lymhurst: solution[piglet_tiles_lymhurst].ceil(),
+        calf_tiles_lymhurst: solution[calf_tiles_lymhurst].ceil(),
+        chicken_tiles_lymhurst: solution[chicken_tiles_lymhurst].ceil(),
+        goat_tiles_lymhurst: solution[goat_tiles_lymhurst].ceil(),
+        goose_tiles_lymhurst: solution[goose_tiles_lymhurst].ceil(),
+        sheep_tiles_lymhurst: solution[sheep_tiles_lymhurst].ceil(),
+        pig_tiles_lymhurst: solution[pig_tiles_lymhurst].ceil(),
+        cow_tiles_lymhurst: solution[cow_tiles_lymhurst].ceil(),
+        agaric_tiles_martlock: solution[agaric_tiles_martlock].ceil(),
+        comfrey_tiles_martlock: solution[comfrey_tiles_martlock].ceil(),
+        burdock_tiles_martlock: solution[burdock_tiles_martlock].ceil(),
+        teasel_tiles_martlock: solution[teasel_tiles_martlock].ceil(),
+        foxglove_tiles_martlock: solution[foxglove_tiles_martlock].ceil(),
+        muellin_tiles_martlock: solution[muellin_tiles_martlock].ceil(),
+        yarrow_tiles_martlock: solution[yarrow_tiles_martlock].ceil(),
+        carrot_tiles_martlock: solution[carrot_tiles_martlock].ceil(),
+        bean_tiles_martlock: solution[bean_tiles_martlock].ceil(),
+        wheat_tiles_martlock: solution[wheat_tiles_martlock].ceil(),
+        turnip_tiles_martlock: solution[turnip_tiles_martlock].ceil(),
+        cabbage_tiles_martlock: solution[cabbage_tiles_martlock].ceil(),
+        potato_tiles_martlock: solution[potato_tiles_martlock].ceil(),
+        corn_tiles_martlock: solution[corn_tiles_martlock].ceil(),
+        pumpkin_tiles_martlock: solution[pumpkin_tiles_martlock].ceil(),
+        baby_chicken_tiles_martlock: solution[baby_chicken_tiles_martlock].ceil(),
+        kid_tiles_martlock: solution[kid_tiles_martlock].ceil(),
+        gosling_tiles_martlock: solution[gosling_tiles_martlock].ceil(),
+        lamb_tiles_martlock: solution[lamb_tiles_martlock].ceil(),
+        piglet_tiles_martlock: solution[piglet_tiles_martlock].ceil(),
+        calf_tiles_martlock: solution[calf_tiles_martlock].ceil(),
+        chicken_tiles_martlock: solution[chicken_tiles_martlock].ceil(),
+        goat_tiles_martlock: solution[goat_tiles_martlock].ceil(),
+        goose_tiles_martlock: solution[goose_tiles_martlock].ceil(),
+        sheep_tiles_martlock: solution[sheep_tiles_martlock].ceil(),
+        pig_tiles_martlock: solution[pig_tiles_martlock].ceil(),
+        cow_tiles_martlock: solution[cow_tiles_martlock].ceil(),
+        agaric_tiles_thetford: solution[agaric_tiles_thetford].ceil(),
+        comfrey_tiles_thetford: solution[comfrey_tiles_thetford].ceil(),
+        burdock_tiles_thetford: solution[burdock_tiles_thetford].ceil(),
+        teasel_tiles_thetford: solution[teasel_tiles_thetford].ceil(),
+        foxglove_tiles_thetford: solution[foxglove_tiles_thetford].ceil(),
+        muellin_tiles_thetford: solution[muellin_tiles_thetford].ceil(),
+        yarrow_tiles_thetford: solution[yarrow_tiles_thetford].ceil(),
+        carrot_tiles_thetford: solution[carrot_tiles_thetford].ceil(),
+        bean_tiles_thetford: solution[bean_tiles_thetford].ceil(),
+        wheat_tiles_thetford: solution[wheat_tiles_thetford].ceil(),
+        turnip_tiles_thetford: solution[turnip_tiles_thetford].ceil(),
+        cabbage_tiles_thetford: solution[cabbage_tiles_thetford].ceil(),
+        potato_tiles_thetford: solution[potato_tiles_thetford].ceil(),
+        corn_tiles_thetford: solution[corn_tiles_thetford].ceil(),
+        pumpkin_tiles_thetford: solution[pumpkin_tiles_thetford].ceil(),
+        baby_chicken_tiles_thetford: solution[baby_chicken_tiles_thetford].ceil(),
+        kid_tiles_thetford: solution[kid_tiles_thetford].ceil(),
+        gosling_tiles_thetford: solution[gosling_tiles_thetford].ceil(),
+        lamb_tiles_thetford: solution[lamb_tiles_thetford].ceil(),
+        piglet_tiles_thetford: solution[piglet_tiles_thetford].ceil(),
+        calf_tiles_thetford: solution[calf_tiles_thetford].ceil(),
+        chicken_tiles_thetford: solution[chicken_tiles_thetford].ceil(),
+        goat_tiles_thetford: solution[goat_tiles_thetford].ceil(),
+        goose_tiles_thetford: solution[goose_tiles_thetford].ceil(),
+        sheep_tiles_thetford: solution[sheep_tiles_thetford].ceil(),
+        pig_tiles_thetford: solution[pig_tiles_thetford].ceil(),
+        cow_tiles_thetford: solution[cow_tiles_thetford].ceil(),
+    };
+    
+    plot_plan
 }
