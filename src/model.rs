@@ -800,6 +800,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     let solution = problem.solve().unwrap();
 
     // constrain patches
+    // TODO: see if there's a better way than using .round()
     problem.add_constraint(&[(herb_gardens_brecilien, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_brecilien] == 0.0 {0.0} else {solution[herb_gardens_brecilien].round().max(1.0)});
     problem.add_constraint(&[(farms_brecilien, 1.0)], ComparisonOp::Eq, if solution[farms_brecilien] == 0.0 {0.0} else {solution[farms_brecilien].round().max(1.0)});
     problem.add_constraint(&[(pastures_brecilien, 1.0)], ComparisonOp::Eq, if solution[pastures_brecilien] == 0.0 {0.0} else {solution[pastures_brecilien].round().max(1.0)});
