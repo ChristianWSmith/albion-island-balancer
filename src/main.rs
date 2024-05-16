@@ -4,8 +4,7 @@ mod types;
 use clap::{Arg, Command};
 
 use crate::{
-    model::optimize_plots,
-    types::{ModelContext, PremiumStatus, Product},
+    constants::{FREE_FACTOR, PREMIUM_FACTOR}, model::optimize_plots, types::{ModelContext, PremiumStatus, Product}
 };
 
 fn main() {
@@ -166,9 +165,9 @@ fn main() {
         martlock_plots: martlock_plots as f64,
         thetford_plots: thetford_plots as f64,
         premium_factor: if *premium_status == PremiumStatus::Premium {
-            2.0
+            PREMIUM_FACTOR
         } else {
-            1.0
+            FREE_FACTOR
         },
         target: *target,
     };

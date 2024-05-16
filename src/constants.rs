@@ -1,4 +1,6 @@
 pub const BONUS_FACTOR: f64 = 1.1;
+pub const PREMIUM_FACTOR: f64 = 2.0;
+pub const FREE_FACTOR: f64 = 1.0;
 pub const ANIMAL_FAVORITE_FOOD_CONSUMPTION: f64 = 9.0;
 pub const TILES_PER_PLOT: f64 = 9.0;
 pub const MEAT_FACTOR: f64 = 20.0;
