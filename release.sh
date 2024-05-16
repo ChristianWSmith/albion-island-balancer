@@ -22,8 +22,12 @@ for target in ${targets[@]}; do
     rustup target add $target
     cargo build --release --target $target
     if test -f target/$target/release/albion-island-balancer; then
-        cp target/$target/release/albion-island-balancer release/albion-island-balancer_$target
+        cp target/$target/release/albion-island-balancer release/albion-island-balancer
+        zip -m release/albion-island-balancer_$target.zip release/albion-island-balancer
+        rm release/albion-island-balancer
     else
-        cp target/$target/release/albion-island-balancer.exe release/albion-island-balancer_$target.exe
+        cp target/$target/release/albion-island-balancer.exe release/albion-island-balancer.exe
+        zip -m release/albion-island-balancer_$target.zip release/albion-island-balancer.exe
+        rm release/albion-island-balancer.exe
     fi
 done
