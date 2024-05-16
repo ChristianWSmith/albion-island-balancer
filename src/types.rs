@@ -1,6 +1,6 @@
 use clap::ValueEnum;
-use std::fmt;
 use regex::Regex;
+use std::fmt;
 
 #[derive(PartialEq, ValueEnum, Clone, Debug)]
 pub enum PremiumStatus {
@@ -86,7 +86,7 @@ pub struct PlotPlan {
     pub herb_gardens_thetford: f64,
     pub farms_thetford: f64,
     pub pastures_thetford: f64,
-    
+
     pub agaric_tiles_brecilien: f64,
     pub comfrey_tiles_brecilien: f64,
     pub burdock_tiles_brecilien: f64,
@@ -297,7 +297,6 @@ impl PlotPlan {
 
         let re = Regex::new(r"\}").unwrap();
         let result = re.replace_all(&result, "\n}");
-
 
         // Return the cleaned string
         result.to_string()
