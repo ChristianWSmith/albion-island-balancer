@@ -800,32 +800,32 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     let solution = problem.solve().unwrap();
 
     // constrain patches
-    problem.add_constraint(&[(herb_gardens_brecilien, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_brecilien] == 0.0 {0.0} else {solution[herb_gardens_brecilien].floor().max(1.0)});
-    problem.add_constraint(&[(farms_brecilien, 1.0)], ComparisonOp::Eq, if solution[farms_brecilien] == 0.0 {0.0} else {solution[farms_brecilien].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_brecilien, 1.0)], ComparisonOp::Eq, if solution[pastures_brecilien] == 0.0 {0.0} else {solution[pastures_brecilien].floor().max(1.0)});
-    problem.add_constraint(&[(herb_gardens_bridgewatch, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_bridgewatch] == 0.0 {0.0} else {solution[herb_gardens_bridgewatch].floor().max(1.0)});
-    problem.add_constraint(&[(farms_bridgewatch, 1.0)], ComparisonOp::Eq, if solution[farms_bridgewatch] == 0.0 {0.0} else {solution[farms_bridgewatch].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_bridgewatch, 1.0)], ComparisonOp::Eq, if solution[pastures_bridgewatch] == 0.0 {0.0} else {solution[pastures_bridgewatch].floor().max(1.0)});
-    problem.add_constraint(&[(herb_gardens_caerleon, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_caerleon] == 0.0 {0.0} else {solution[herb_gardens_caerleon].floor().max(1.0)});
-    problem.add_constraint(&[(farms_caerleon, 1.0)], ComparisonOp::Eq, if solution[farms_caerleon] == 0.0 {0.0} else {solution[farms_caerleon].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_caerleon, 1.0)], ComparisonOp::Eq, if solution[pastures_caerleon] == 0.0 {0.0} else {solution[pastures_caerleon].floor().max(1.0)});
-    problem.add_constraint(&[(herb_gardens_fort_sterling, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_fort_sterling] == 0.0 {0.0} else {solution[herb_gardens_fort_sterling].floor().max(1.0)});
-    problem.add_constraint(&[(farms_fort_sterling, 1.0)], ComparisonOp::Eq, if solution[farms_fort_sterling] == 0.0 {0.0} else {solution[farms_fort_sterling].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_fort_sterling, 1.0)], ComparisonOp::Eq, if solution[pastures_fort_sterling] == 0.0 {0.0} else {solution[pastures_fort_sterling].floor().max(1.0)});
-    problem.add_constraint(&[(herb_gardens_lymhurst, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_lymhurst] == 0.0 {0.0} else {solution[herb_gardens_lymhurst].floor().max(1.0)});
-    problem.add_constraint(&[(farms_lymhurst, 1.0)], ComparisonOp::Eq, if solution[farms_lymhurst] == 0.0 {0.0} else {solution[farms_lymhurst].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_lymhurst, 1.0)], ComparisonOp::Eq, if solution[pastures_lymhurst] == 0.0 {0.0} else {solution[pastures_lymhurst].floor().max(1.0)});
-    problem.add_constraint(&[(herb_gardens_martlock, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_martlock] == 0.0 {0.0} else {solution[herb_gardens_martlock].floor().max(1.0)});
-    problem.add_constraint(&[(farms_martlock, 1.0)], ComparisonOp::Eq, if solution[farms_martlock] == 0.0 {0.0} else {solution[farms_martlock].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_martlock, 1.0)], ComparisonOp::Eq, if solution[pastures_martlock] == 0.0 {0.0} else {solution[pastures_martlock].floor().max(1.0)});
-    problem.add_constraint(&[(herb_gardens_thetford, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_thetford] == 0.0 {0.0} else {solution[herb_gardens_thetford].floor().max(1.0)});
-    problem.add_constraint(&[(farms_thetford, 1.0)], ComparisonOp::Eq, if solution[farms_thetford] == 0.0 {0.0} else {solution[farms_thetford].floor().max(1.0)});
-    problem.add_constraint(&[(pastures_thetford, 1.0)], ComparisonOp::Eq, if solution[pastures_thetford] == 0.0 {0.0} else {solution[pastures_thetford].floor().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_brecilien, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_brecilien] == 0.0 {0.0} else {solution[herb_gardens_brecilien].round().max(1.0)});
+    problem.add_constraint(&[(farms_brecilien, 1.0)], ComparisonOp::Eq, if solution[farms_brecilien] == 0.0 {0.0} else {solution[farms_brecilien].round().max(1.0)});
+    problem.add_constraint(&[(pastures_brecilien, 1.0)], ComparisonOp::Eq, if solution[pastures_brecilien] == 0.0 {0.0} else {solution[pastures_brecilien].round().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_bridgewatch, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_bridgewatch] == 0.0 {0.0} else {solution[herb_gardens_bridgewatch].round().max(1.0)});
+    problem.add_constraint(&[(farms_bridgewatch, 1.0)], ComparisonOp::Eq, if solution[farms_bridgewatch] == 0.0 {0.0} else {solution[farms_bridgewatch].round().max(1.0)});
+    problem.add_constraint(&[(pastures_bridgewatch, 1.0)], ComparisonOp::Eq, if solution[pastures_bridgewatch] == 0.0 {0.0} else {solution[pastures_bridgewatch].round().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_caerleon, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_caerleon] == 0.0 {0.0} else {solution[herb_gardens_caerleon].round().max(1.0)});
+    problem.add_constraint(&[(farms_caerleon, 1.0)], ComparisonOp::Eq, if solution[farms_caerleon] == 0.0 {0.0} else {solution[farms_caerleon].round().max(1.0)});
+    problem.add_constraint(&[(pastures_caerleon, 1.0)], ComparisonOp::Eq, if solution[pastures_caerleon] == 0.0 {0.0} else {solution[pastures_caerleon].round().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_fort_sterling, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_fort_sterling] == 0.0 {0.0} else {solution[herb_gardens_fort_sterling].round().max(1.0)});
+    problem.add_constraint(&[(farms_fort_sterling, 1.0)], ComparisonOp::Eq, if solution[farms_fort_sterling] == 0.0 {0.0} else {solution[farms_fort_sterling].round().max(1.0)});
+    problem.add_constraint(&[(pastures_fort_sterling, 1.0)], ComparisonOp::Eq, if solution[pastures_fort_sterling] == 0.0 {0.0} else {solution[pastures_fort_sterling].round().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_lymhurst, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_lymhurst] == 0.0 {0.0} else {solution[herb_gardens_lymhurst].round().max(1.0)});
+    problem.add_constraint(&[(farms_lymhurst, 1.0)], ComparisonOp::Eq, if solution[farms_lymhurst] == 0.0 {0.0} else {solution[farms_lymhurst].round().max(1.0)});
+    problem.add_constraint(&[(pastures_lymhurst, 1.0)], ComparisonOp::Eq, if solution[pastures_lymhurst] == 0.0 {0.0} else {solution[pastures_lymhurst].round().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_martlock, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_martlock] == 0.0 {0.0} else {solution[herb_gardens_martlock].round().max(1.0)});
+    problem.add_constraint(&[(farms_martlock, 1.0)], ComparisonOp::Eq, if solution[farms_martlock] == 0.0 {0.0} else {solution[farms_martlock].round().max(1.0)});
+    problem.add_constraint(&[(pastures_martlock, 1.0)], ComparisonOp::Eq, if solution[pastures_martlock] == 0.0 {0.0} else {solution[pastures_martlock].round().max(1.0)});
+    problem.add_constraint(&[(herb_gardens_thetford, 1.0)], ComparisonOp::Eq, if solution[herb_gardens_thetford] == 0.0 {0.0} else {solution[herb_gardens_thetford].round().max(1.0)});
+    problem.add_constraint(&[(farms_thetford, 1.0)], ComparisonOp::Eq, if solution[farms_thetford] == 0.0 {0.0} else {solution[farms_thetford].round().max(1.0)});
+    problem.add_constraint(&[(pastures_thetford, 1.0)], ComparisonOp::Eq, if solution[pastures_thetford] == 0.0 {0.0} else {solution[pastures_thetford].round().max(1.0)});
 
     let solution = problem.solve().unwrap();
 
     let plot_plan = PlotPlan {
-        output: solution.objective().floor(),
+        output: solution.objective().round(),
 
         herb_gardens_brecilien: solution[herb_gardens_brecilien].ceil(),
         farms_brecilien: solution[farms_brecilien].ceil(),
