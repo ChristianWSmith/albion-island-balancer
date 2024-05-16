@@ -329,44 +329,217 @@ pub fn optimize_plots(context: ModelContext) -> Solution {
 
     //// products
     // TODO: do this better
-    let minor_energy_potion = problem.add_var(if context.target == Product::MinorEnergyPotion { 1.0 } else { if context.target == Product::MinorHealingPotion { 1.0 } else { 0.0 } }, (0.0, f64::INFINITY));
-    let minor_healing_potion = problem.add_var(if context.target == Product::MinorHealingPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let minor_gigantify_potion = problem.add_var(if context.target == Product::MinorGigantifyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let minor_resistance_potion = problem.add_var(if context.target == Product::MinorResistancePotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let minor_sticky_potion = problem.add_var(if context.target == Product::MinorStickyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let minor_poison_potion = problem.add_var(if context.target == Product::MinorPoisonPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let energy_potion = problem.add_var(if context.target == Product::EnergyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let healing_potion = problem.add_var(if context.target == Product::HealingPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let gigantify_potion = problem.add_var(if context.target == Product::GigantifyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let resistance_potion = problem.add_var(if context.target == Product::ResistancePotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let sticky_potion = problem.add_var(if context.target == Product::StickyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let poison_potion = problem.add_var(if context.target == Product::PoisonPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let major_energy_potion = problem.add_var(if context.target == Product::MajorEnergyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let major_healing_potion = problem.add_var(if context.target == Product::MajorHealingPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let major_gigantify_potion = problem.add_var(if context.target == Product::MajorGigantifyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let major_resistance_potion = problem.add_var(if context.target == Product::MajorResistancePotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let major_sticky_potion = problem.add_var(if context.target == Product::MajorStickyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let major_poison_potion = problem.add_var(if context.target == Product::MajorPoisonPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let invisibility_potion = problem.add_var(if context.target == Product::InvisibilityPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let chicken_omelette = problem.add_var(if context.target == Product::ChickenOmelette { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let goose_omelette = problem.add_var(if context.target == Product::GooseOmelette { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let pork_omelette = problem.add_var(if context.target == Product::PorkOmelette { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let bean_salad = problem.add_var(if context.target == Product::BeanSalad { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let turnip_salad = problem.add_var(if context.target == Product::TurnipSalad { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let potato_salad = problem.add_var(if context.target == Product::PotatoSalad { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let goat_sandwich = problem.add_var(if context.target == Product::GoatSandwich { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let mutton_sandwich = problem.add_var(if context.target == Product::MuttonSandwich { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let beef_sandwich = problem.add_var(if context.target == Product::BeefSandwich { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let carrot_soup = problem.add_var(if context.target == Product::CarrotSoup { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let wheat_soup = problem.add_var(if context.target == Product::WheatSoup { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let cabbage_soup = problem.add_var(if context.target == Product::CabbageSoup { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let goat_stew = problem.add_var(if context.target == Product::GoatStew { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let mutton_stew = problem.add_var(if context.target == Product::MuttonStew { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let beef_stew = problem.add_var(if context.target == Product::BeefStew { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let roast_chicken = problem.add_var(if context.target == Product::RoastChicken { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let roast_goose = problem.add_var(if context.target == Product::RoastGoose { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
-    let roast_pork = problem.add_var(if context.target == Product::RoastPork { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
+    let mut minor_energy_potion_objective_value: f64 = 0.0;
+    let mut minor_healing_potion_objective_value: f64 = 0.0;
+    let mut minor_gigantify_potion_objective_value: f64 = 0.0;
+    let mut minor_resistance_potion_objective_value: f64 = 0.0;
+    let mut minor_sticky_potion_objective_value: f64 = 0.0;
+    let mut minor_poison_potion_objective_value: f64 = 0.0;
+    let mut energy_potion_objective_value: f64 = 0.0;
+    let mut healing_potion_objective_value: f64 = 0.0;
+    let mut gigantify_potion_objective_value: f64 = 0.0;
+    let mut resistance_potion_objective_value: f64 = 0.0;
+    let mut sticky_potion_objective_value: f64 = 0.0;
+    let mut poison_potion_objective_value: f64 = 0.0;
+    let mut major_energy_potion_objective_value: f64 = 0.0;
+    let mut major_healing_potion_objective_value: f64 = 0.0;
+    let mut major_gigantify_potion_objective_value: f64 = 0.0;
+    let mut major_resistance_potion_objective_value: f64 = 0.0;
+    let mut major_sticky_potion_objective_value: f64 = 0.0;
+    let mut major_poison_potion_objective_value: f64 = 0.0;
+    let mut invisibility_potion_objective_value: f64 = 0.0;
+    let mut chicken_omelette_objective_value: f64 = 0.0;
+    let mut goose_omelette_objective_value: f64 = 0.0;
+    let mut pork_omelette_objective_value: f64 = 0.0;
+    let mut bean_salad_objective_value: f64 = 0.0;
+    let mut turnip_salad_objective_value: f64 = 0.0;
+    let mut potato_salad_objective_value: f64 = 0.0;
+    let mut goat_sandwich_objective_value: f64 = 0.0;
+    let mut mutton_sandwich_objective_value: f64 = 0.0;
+    let mut beef_sandwich_objective_value: f64 = 0.0;
+    let mut carrot_soup_objective_value: f64 = 0.0;
+    let mut wheat_soup_objective_value: f64 = 0.0;
+    let mut cabbage_soup_objective_value: f64 = 0.0;
+    let mut goat_stew_objective_value: f64 = 0.0;
+    let mut mutton_stew_objective_value: f64 = 0.0;
+    let mut beef_stew_objective_value: f64 = 0.0;
+    let mut roast_chicken_objective_value: f64 = 0.0;
+    let mut roast_goose_objective_value: f64 = 0.0;
+    let mut roast_pork_objective_value: f64 = 0.0;
 
+    match context.target {
+        Product::MinorEnergyPotion => {
+            minor_energy_potion_objective_value = 1.0;
+            
+        },
+        Product::MinorHealingPotion => {
+            minor_healing_potion_objective_value = 1.0;
+
+        },
+        Product::MinorGigantifyPotion => {
+            minor_gigantify_potion_objective_value = 1.0;
+
+        },
+        Product::MinorResistancePotion => {
+            minor_resistance_potion_objective_value = 1.0;
+
+        },
+        Product::MinorStickyPotion => {
+            minor_sticky_potion_objective_value = 1.0;
+
+        },
+        Product::MinorPoisonPotion => {
+            minor_poison_potion_objective_value = 1.0;
+        },
+        Product::EnergyPotion => {
+            energy_potion_objective_value = 1.0;
+
+        },
+        Product::HealingPotion => {
+            healing_potion_objective_value = 1.0;
+
+        },
+        Product::GigantifyPotion => {
+            gigantify_potion_objective_value = 1.0;
+
+        },
+        Product::ResistancePotion => {
+            resistance_potion_objective_value = 1.0;
+
+        },
+        Product::StickyPotion => {
+            sticky_potion_objective_value = 1.0;
+
+        },
+        Product::PoisonPotion => {
+            poison_potion_objective_value = 1.0;
+
+        },
+        Product::MajorEnergyPotion => {
+            major_energy_potion_objective_value = 1.0;
+
+        },
+        Product::MajorHealingPotion => {
+            major_healing_potion_objective_value = 1.0;
+
+        },
+        Product::MajorGigantifyPotion => {
+            major_gigantify_potion_objective_value = 1.0;
+
+        },
+        Product::MajorResistancePotion => {
+            major_resistance_potion_objective_value = 1.0;
+
+        },
+        Product::MajorStickyPotion => {
+            major_sticky_potion_objective_value = 1.0;
+
+        },
+        Product::MajorPoisonPotion => {
+            major_poison_potion_objective_value = 1.0;
+        },
+        Product::InvisibilityPotion => {
+            invisibility_potion_objective_value = 1.0;
+
+        },
+        Product::ChickenOmelette => {
+            chicken_omelette_objective_value = 1.0;
+
+        },
+        Product::GooseOmelette => {
+            goose_omelette_objective_value = 1.0;
+
+        },
+        Product::PorkOmelette => {
+            pork_omelette_objective_value = 1.0;
+
+        },
+        Product::BeanSalad => {
+            bean_salad_objective_value = 1.0;
+
+        },
+        Product::TurnipSalad => {
+            turnip_salad_objective_value = 1.0;
+
+        },
+        Product::PotatoSalad => {
+            potato_salad_objective_value = 1.0;
+        },
+        Product::GoatSandwich => {
+            goat_sandwich_objective_value = 1.0;
+        },
+        Product::MuttonSandwich => {
+            mutton_sandwich_objective_value = 1.0;
+        },
+        Product::BeefSandwich => {
+            beef_sandwich_objective_value = 1.0;
+        },
+        Product::CarrotSoup => {
+            carrot_soup_objective_value = 1.0;
+        },
+        Product::WheatSoup => {
+            wheat_soup_objective_value = 1.0;
+        },
+        Product::CabbageSoup => {
+            cabbage_soup_objective_value = 1.0;
+        },
+        Product::GoatStew => {
+            goat_stew_objective_value = 1.0;
+        },
+        Product::MuttonStew => {
+            mutton_stew_objective_value = 1.0;
+        },
+        Product::BeefStew => {
+            beef_stew_objective_value = 1.0;
+        },
+        Product::RoastChicken => {
+            roast_chicken_objective_value = 1.0;
+        },
+        Product::RoastGoose => {
+            roast_goose_objective_value = 1.0;
+        },
+        Product::RoastPork => {
+            roast_pork_objective_value = 1.0;
+        },
+    }
+
+    let minor_energy_potion = problem.add_var(minor_energy_potion_objective_value, (0.0, f64::INFINITY));
+    let minor_healing_potion = problem.add_var(minor_healing_potion_objective_value, (0.0, f64::INFINITY));
+    let minor_gigantify_potion = problem.add_var(minor_gigantify_potion_objective_value, (0.0, f64::INFINITY));
+    let minor_resistance_potion = problem.add_var(minor_resistance_potion_objective_value, (0.0, f64::INFINITY));
+    let minor_sticky_potion = problem.add_var(minor_sticky_potion_objective_value, (0.0, f64::INFINITY));
+    let minor_poison_potion = problem.add_var(minor_poison_potion_objective_value, (0.0, f64::INFINITY));
+    let energy_potion = problem.add_var(energy_potion_objective_value, (0.0, f64::INFINITY));
+    let healing_potion = problem.add_var(healing_potion_objective_value, (0.0, f64::INFINITY));
+    let gigantify_potion = problem.add_var(gigantify_potion_objective_value, (0.0, f64::INFINITY));
+    let resistance_potion = problem.add_var(resistance_potion_objective_value, (0.0, f64::INFINITY));
+    let sticky_potion = problem.add_var(sticky_potion_objective_value, (0.0, f64::INFINITY));
+    let poison_potion = problem.add_var(poison_potion_objective_value, (0.0, f64::INFINITY));
+    let major_energy_potion = problem.add_var(major_energy_potion_objective_value, (0.0, f64::INFINITY));
+    let major_healing_potion = problem.add_var(major_healing_potion_objective_value, (0.0, f64::INFINITY));
+    let major_gigantify_potion = problem.add_var(major_gigantify_potion_objective_value, (0.0, f64::INFINITY));
+    let major_resistance_potion = problem.add_var(major_resistance_potion_objective_value, (0.0, f64::INFINITY));
+    let major_sticky_potion = problem.add_var(major_sticky_potion_objective_value, (0.0, f64::INFINITY));
+    let major_poison_potion = problem.add_var(major_poison_potion_objective_value, (0.0, f64::INFINITY));
+    let invisibility_potion = problem.add_var(invisibility_potion_objective_value, (0.0, f64::INFINITY));
+    let chicken_omelette = problem.add_var(chicken_omelette_objective_value, (0.0, f64::INFINITY));
+    let goose_omelette = problem.add_var(goose_omelette_objective_value, (0.0, f64::INFINITY));
+    let pork_omelette = problem.add_var(pork_omelette_objective_value, (0.0, f64::INFINITY));
+    let bean_salad = problem.add_var(bean_salad_objective_value, (0.0, f64::INFINITY));
+    let turnip_salad = problem.add_var(turnip_salad_objective_value, (0.0, f64::INFINITY));
+    let potato_salad = problem.add_var(potato_salad_objective_value, (0.0, f64::INFINITY));
+    let goat_sandwich = problem.add_var(goat_sandwich_objective_value, (0.0, f64::INFINITY));
+    let mutton_sandwich = problem.add_var(mutton_sandwich_objective_value, (0.0, f64::INFINITY));
+    let beef_sandwich = problem.add_var(beef_sandwich_objective_value, (0.0, f64::INFINITY));
+    let carrot_soup = problem.add_var(carrot_soup_objective_value, (0.0, f64::INFINITY));
+    let wheat_soup = problem.add_var(wheat_soup_objective_value, (0.0, f64::INFINITY));
+    let cabbage_soup = problem.add_var(cabbage_soup_objective_value, (0.0, f64::INFINITY));
+    let goat_stew = problem.add_var(goat_stew_objective_value, (0.0, f64::INFINITY));
+    let mutton_stew = problem.add_var(mutton_stew_objective_value, (0.0, f64::INFINITY));
+    let beef_stew = problem.add_var(beef_stew_objective_value, (0.0, f64::INFINITY));
+    let roast_chicken = problem.add_var(roast_chicken_objective_value, (0.0, f64::INFINITY));
+    let roast_goose = problem.add_var(roast_goose_objective_value, (0.0, f64::INFINITY));
+    let roast_pork = problem.add_var(roast_pork_objective_value, (0.0, f64::INFINITY));
     
     // constraints
     //// argument constraints
