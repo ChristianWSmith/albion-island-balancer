@@ -328,6 +328,7 @@ pub fn optimize_plots(context: ModelContext) -> Solution {
     let raw_beef = problem.add_var(0.0, (0.0, f64::INFINITY));
 
     //// products
+    // TODO: do this better
     let minor_energy_potion = problem.add_var(if context.target == Product::MinorEnergyPotion { 1.0 } else { if context.target == Product::MinorHealingPotion { 1.0 } else { 0.0 } }, (0.0, f64::INFINITY));
     let minor_healing_potion = problem.add_var(if context.target == Product::MinorHealingPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
     let minor_gigantify_potion = problem.add_var(if context.target == Product::MinorGigantifyPotion { 1.0 } else { 0.0 }, (0.0, f64::INFINITY));
@@ -469,44 +470,162 @@ pub fn optimize_plots(context: ModelContext) -> Solution {
 
     ////// recipe constraints
     // TODO: fix recipe constraints to work like the commented out section above
-    problem.add_constraint(&[(minor_energy_potion, POTIONS_PER_CRAFT), (agaric_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(minor_healing_potion, POTIONS_PER_CRAFT), (agaric_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(minor_gigantify_potion, POTIONS_PER_CRAFT), (comfrey_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(minor_resistance_potion, POTIONS_PER_CRAFT), (comfrey_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(minor_sticky_potion, POTIONS_PER_CRAFT), (comfrey_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(minor_poison_potion, POTIONS_PER_CRAFT), (burdock_herbs, -1.0 * L04_INGREDIENT), (comfrey_herbs, -1.0 * L02_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(energy_potion, POTIONS_PER_CRAFT), (burdock_herbs , -1.0 * L08_INGREDIENT), (goats_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(healing_potion, POTIONS_PER_CRAFT), (burdock_herbs, -1.0 * L08_INGREDIENT), (hen_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(gigantify_potion, POTIONS_PER_CRAFT), (teasel_herbs, -1.0 * L08_INGREDIENT), (burdock_herbs, -1.0 * L05_INGREDIENT), (goose_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(resistance_potion, POTIONS_PER_CRAFT), (teasel_herbs, -1.0 * L08_INGREDIENT), (burdock_herbs, -1.0 * L05_INGREDIENT), (goats_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(sticky_potion, POTIONS_PER_CRAFT), (teasel_herbs, -1.0 * L08_INGREDIENT), (burdock_herbs, -1.0 * L05_INGREDIENT), (goose_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(poison_potion, POTIONS_PER_CRAFT), (foxglove_herbs, -1.0 * L08_INGREDIENT), (teasel_herbs, -1.0 * L05_INGREDIENT), (comfrey_herbs, -1.0 * L05_INGREDIENT), (sheeps_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(major_energy_potion, POTIONS_PER_CRAFT), (foxglove_herbs, -1.0 * L11_INGREDIENT), (sheeps_milk, -1.0 * L07_INGREDIENT), (potato_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(major_healing_potion, POTIONS_PER_CRAFT), (foxglove_herbs, -1.0 * L11_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT), (potato_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(major_gigantify_potion, POTIONS_PER_CRAFT), (muellin_herbs, -1.0 * L11_INGREDIENT), (foxglove_herbs, -1.0 * L09_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT), (corn_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(major_resistance_potion, POTIONS_PER_CRAFT), (muellin_herbs, -1.0 * L11_INGREDIENT), (foxglove_herbs, -1.0 * L09_INGREDIENT), (burdock_herbs, -1.0 * L09_INGREDIENT), (sheeps_milk, -1.0 * L07_INGREDIENT), (corn_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(major_sticky_potion, POTIONS_PER_CRAFT), (muellin_herbs, -1.0 * L11_INGREDIENT), (foxglove_herbs, -1.0 * L09_INGREDIENT), (burdock_herbs, -1.0 * L09_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT), (corn_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(major_poison_potion, POTIONS_PER_CRAFT), (yarrow_herbs, -1.0 * L11_INGREDIENT), (muellin_herbs, -1.0 * L09_INGREDIENT), (teasel_herbs, -1.0 * L09_INGREDIENT), (cows_milk, -1.0 * L07_INGREDIENT), (pumpkin_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(invisibility_potion, POTIONS_PER_CRAFT), (yarrow_herbs, -1.0 * L11_INGREDIENT), (muellin_herbs, -1.0 * L09_INGREDIENT), (teasel_herbs, -1.0 * L09_INGREDIENT), (cows_milk, -1.0 * L07_INGREDIENT), (pumpkin_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(chicken_omelette, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L02_INGREDIENT), (raw_chicken, -1.0 * L04_INGREDIENT), (hen_eggs, -1.0 * L01_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(goose_omelette, FOOD_PER_CRAFT), (cabbage_crops, -1.0 * L05_INGREDIENT), (raw_goose, -1.0 * L08_INGREDIENT), (goose_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(pork_omelette, FOOD_PER_CRAFT), (corn_crops, -1.0 * L09_INGREDIENT), (raw_pork, -1.0 * L11_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(bean_salad, FOOD_PER_CRAFT), (bean_crops, -1.0 * L04_INGREDIENT), (carrot_crops, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(turnip_salad, FOOD_PER_CRAFT), (turnip_crops, -1.0 * L08_INGREDIENT), (wheat_crops, -1.0 * L08_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(potato_salad, FOOD_PER_CRAFT), (potato_crops, -1.0 * L11_INGREDIENT), (cabbage_crops, -1.0 * L11_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(goat_sandwich, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L02_INGREDIENT), (raw_goat, -1.0 * L04_INGREDIENT), (goats_milk, -1.0 * L01_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(mutton_sandwich, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L05_INGREDIENT), (raw_mutton, -1.0 * L08_INGREDIENT), (sheeps_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(beef_sandwich, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L09_INGREDIENT), (raw_beef, -1.0 * L11_INGREDIENT), (cows_milk, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(carrot_soup, FOOD_PER_CRAFT), (carrot_crops, -1.0 * L06_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(wheat_soup, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L10_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(cabbage_soup, FOOD_PER_CRAFT), (cabbage_crops, -1.0 * L12_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(goat_stew, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L02_INGREDIENT), (raw_goat, -1.0 * L04_INGREDIENT), (turnip_crops, -1.0 * L02_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(mutton_stew, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L05_INGREDIENT), (raw_mutton, -1.0 * L08_INGREDIENT), (potato_crops, -1.0 * L05_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(beef_stew, FOOD_PER_CRAFT), (pumpkin_crops, -1.0 * L09_INGREDIENT), (raw_beef, -1.0 * L11_INGREDIENT), (wheat_crops, -1.0 * L09_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(roast_chicken, FOOD_PER_CRAFT), (raw_chicken, -1.0 * L04_INGREDIENT), (bean_crops, -1.0 * L02_INGREDIENT), (goats_milk, -1.0 * L02_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(roast_goose, FOOD_PER_CRAFT), (raw_goose, -1.0 * L08_INGREDIENT), (cabbage_crops, -1.0 * L05_INGREDIENT), (sheeps_milk, -1.0 * L05_INGREDIENT)], ComparisonOp::Eq, 0.0);
-    problem.add_constraint(&[(roast_pork, FOOD_PER_CRAFT), (raw_pork, -1.0 * L11_INGREDIENT), (corn_crops, -1.0 * L09_INGREDIENT), (cows_milk, -1.0 * L09_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+    match context.target {
+        Product::MinorEnergyPotion => {
+            // problem.add_constraint(&[(minor_energy_potion, POTIONS_PER_CRAFT), (agaric_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
+            
+        },
+        Product::MinorHealingPotion => {
+            // problem.add_constraint(&[(minor_healing_potion, POTIONS_PER_CRAFT), (agaric_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MinorGigantifyPotion => {
+            // problem.add_constraint(&[(minor_gigantify_potion, POTIONS_PER_CRAFT), (comfrey_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MinorResistancePotion => {
+            // problem.add_constraint(&[(minor_resistance_potion, POTIONS_PER_CRAFT), (comfrey_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MinorStickyPotion => {
+            // problem.add_constraint(&[(minor_sticky_potion, POTIONS_PER_CRAFT), (comfrey_herbs, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MinorPoisonPotion => {
+            // problem.add_constraint(&[(minor_poison_potion, POTIONS_PER_CRAFT), (burdock_herbs, -1.0 * L04_INGREDIENT), (comfrey_herbs, -1.0 * L02_INGREDIENT)], ComparisonOp::Eq, 0.0);
+        },
+        Product::EnergyPotion => {
+            // problem.add_constraint(&[(energy_potion, POTIONS_PER_CRAFT), (burdock_herbs , -1.0 * L08_INGREDIENT), (goats_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::HealingPotion => {
+            // problem.add_constraint(&[(healing_potion, POTIONS_PER_CRAFT), (burdock_herbs, -1.0 * L08_INGREDIENT), (hen_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::GigantifyPotion => {
+            // problem.add_constraint(&[(gigantify_potion, POTIONS_PER_CRAFT), (teasel_herbs, -1.0 * L08_INGREDIENT), (burdock_herbs, -1.0 * L05_INGREDIENT), (goose_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::ResistancePotion => {
+            // problem.add_constraint(&[(resistance_potion, POTIONS_PER_CRAFT), (teasel_herbs, -1.0 * L08_INGREDIENT), (burdock_herbs, -1.0 * L05_INGREDIENT), (goats_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::StickyPotion => {
+            // problem.add_constraint(&[(sticky_potion, POTIONS_PER_CRAFT), (teasel_herbs, -1.0 * L08_INGREDIENT), (burdock_herbs, -1.0 * L05_INGREDIENT), (goose_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::PoisonPotion => {
+            // problem.add_constraint(&[(poison_potion, POTIONS_PER_CRAFT), (foxglove_herbs, -1.0 * L08_INGREDIENT), (teasel_herbs, -1.0 * L05_INGREDIENT), (comfrey_herbs, -1.0 * L05_INGREDIENT), (sheeps_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MajorEnergyPotion => {
+            // problem.add_constraint(&[(major_energy_potion, POTIONS_PER_CRAFT), (foxglove_herbs, -1.0 * L11_INGREDIENT), (sheeps_milk, -1.0 * L07_INGREDIENT), (potato_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MajorHealingPotion => {
+            // problem.add_constraint(&[(major_healing_potion, POTIONS_PER_CRAFT), (foxglove_herbs, -1.0 * L11_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT), (potato_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MajorGigantifyPotion => {
+            // problem.add_constraint(&[(major_gigantify_potion, POTIONS_PER_CRAFT), (muellin_herbs, -1.0 * L11_INGREDIENT), (foxglove_herbs, -1.0 * L09_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT), (corn_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MajorResistancePotion => {
+            // problem.add_constraint(&[(major_resistance_potion, POTIONS_PER_CRAFT), (muellin_herbs, -1.0 * L11_INGREDIENT), (foxglove_herbs, -1.0 * L09_INGREDIENT), (burdock_herbs, -1.0 * L09_INGREDIENT), (sheeps_milk, -1.0 * L07_INGREDIENT), (corn_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MajorStickyPotion => {
+            // problem.add_constraint(&[(major_sticky_potion, POTIONS_PER_CRAFT), (muellin_herbs, -1.0 * L11_INGREDIENT), (foxglove_herbs, -1.0 * L09_INGREDIENT), (burdock_herbs, -1.0 * L09_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT), (corn_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MajorPoisonPotion => {
+            // problem.add_constraint(&[(major_poison_potion, POTIONS_PER_CRAFT), (yarrow_herbs, -1.0 * L11_INGREDIENT), (muellin_herbs, -1.0 * L09_INGREDIENT), (teasel_herbs, -1.0 * L09_INGREDIENT), (cows_milk, -1.0 * L07_INGREDIENT), (pumpkin_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+            problem.add_constraint(&[(cows_milk, 1.0 * L07_INGREDIENT), (pumpkin_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+            problem.add_constraint(&[(teasel_herbs, 1.0 * L07_INGREDIENT), (cows_milk, -1.0 * L09_INGREDIENT)], ComparisonOp::Eq, 0.0);
+            problem.add_constraint(&[(muellin_herbs, 1.0 * L09_INGREDIENT), (teasel_herbs, -1.0 * L09_INGREDIENT)], ComparisonOp::Eq, 0.0);
+            problem.add_constraint(&[(yarrow_herbs, 1.0 * L09_INGREDIENT), (muellin_herbs, -1.0 * L11_INGREDIENT)], ComparisonOp::Eq, 0.0);
+            problem.add_constraint(&[(major_poison_potion, 1.0 * L11_INGREDIENT), (yarrow_herbs, -1.0 * POTIONS_PER_CRAFT)], ComparisonOp::Eq, 0.0);        
+        },
+        Product::InvisibilityPotion => {
+            // problem.add_constraint(&[(invisibility_potion, POTIONS_PER_CRAFT), (yarrow_herbs, -1.0 * L11_INGREDIENT), (muellin_herbs, -1.0 * L09_INGREDIENT), (teasel_herbs, -1.0 * L09_INGREDIENT), (cows_milk, -1.0 * L07_INGREDIENT), (pumpkin_crops, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::ChickenOmelette => {
+            // problem.add_constraint(&[(chicken_omelette, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L02_INGREDIENT), (raw_chicken, -1.0 * L04_INGREDIENT), (hen_eggs, -1.0 * L01_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::GooseOmelette => {
+            // problem.add_constraint(&[(goose_omelette, FOOD_PER_CRAFT), (cabbage_crops, -1.0 * L05_INGREDIENT), (raw_goose, -1.0 * L08_INGREDIENT), (goose_eggs, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::PorkOmelette => {
+            // problem.add_constraint(&[(pork_omelette, FOOD_PER_CRAFT), (corn_crops, -1.0 * L09_INGREDIENT), (raw_pork, -1.0 * L11_INGREDIENT), (goose_eggs, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::BeanSalad => {
+            // problem.add_constraint(&[(bean_salad, FOOD_PER_CRAFT), (bean_crops, -1.0 * L04_INGREDIENT), (carrot_crops, -1.0 * L04_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::TurnipSalad => {
+            // problem.add_constraint(&[(turnip_salad, FOOD_PER_CRAFT), (turnip_crops, -1.0 * L08_INGREDIENT), (wheat_crops, -1.0 * L08_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::PotatoSalad => {
+            // problem.add_constraint(&[(potato_salad, FOOD_PER_CRAFT), (potato_crops, -1.0 * L11_INGREDIENT), (cabbage_crops, -1.0 * L11_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::GoatSandwich => {
+            // problem.add_constraint(&[(goat_sandwich, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L02_INGREDIENT), (raw_goat, -1.0 * L04_INGREDIENT), (goats_milk, -1.0 * L01_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MuttonSandwich => {
+            // problem.add_constraint(&[(mutton_sandwich, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L05_INGREDIENT), (raw_mutton, -1.0 * L08_INGREDIENT), (sheeps_milk, -1.0 * L03_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::BeefSandwich => {
+            // problem.add_constraint(&[(beef_sandwich, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L09_INGREDIENT), (raw_beef, -1.0 * L11_INGREDIENT), (cows_milk, -1.0 * L07_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::CarrotSoup => {
+            // problem.add_constraint(&[(carrot_soup, FOOD_PER_CRAFT), (carrot_crops, -1.0 * L06_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::WheatSoup => {
+            // problem.add_constraint(&[(wheat_soup, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L10_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::CabbageSoup => {
+            // problem.add_constraint(&[(cabbage_soup, FOOD_PER_CRAFT), (cabbage_crops, -1.0 * L12_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::GoatStew => {
+            // problem.add_constraint(&[(goat_stew, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L02_INGREDIENT), (raw_goat, -1.0 * L04_INGREDIENT), (turnip_crops, -1.0 * L02_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::MuttonStew => {
+            // problem.add_constraint(&[(mutton_stew, FOOD_PER_CRAFT), (wheat_crops, -1.0 * L05_INGREDIENT), (raw_mutton, -1.0 * L08_INGREDIENT), (potato_crops, -1.0 * L05_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::BeefStew => {
+            // problem.add_constraint(&[(beef_stew, FOOD_PER_CRAFT), (pumpkin_crops, -1.0 * L09_INGREDIENT), (raw_beef, -1.0 * L11_INGREDIENT), (wheat_crops, -1.0 * L09_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::RoastChicken => {
+            // problem.add_constraint(&[(roast_chicken, FOOD_PER_CRAFT), (raw_chicken, -1.0 * L04_INGREDIENT), (bean_crops, -1.0 * L02_INGREDIENT), (goats_milk, -1.0 * L02_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::RoastGoose => {
+            // problem.add_constraint(&[(roast_goose, FOOD_PER_CRAFT), (raw_goose, -1.0 * L08_INGREDIENT), (cabbage_crops, -1.0 * L05_INGREDIENT), (sheeps_milk, -1.0 * L05_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+        Product::RoastPork => {
+            // problem.add_constraint(&[(roast_pork, FOOD_PER_CRAFT), (raw_pork, -1.0 * L11_INGREDIENT), (corn_crops, -1.0 * L09_INGREDIENT), (cows_milk, -1.0 * L09_INGREDIENT)], ComparisonOp::Eq, 0.0);
+
+        },
+    }
 
     let solution = problem.solve().unwrap();
+    println!("{}", solution[teasel_tiles_lymhurst]);
     solution
 }
