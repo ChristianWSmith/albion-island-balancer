@@ -174,5 +174,5 @@ fn main() {
         target: *target,
     };
     let model = optimize_plots(context);
-    println!("{}", model);
+    println!("{:?}", model);
 }
