@@ -799,6 +799,13 @@ pub fn optimize_plots(context: ModelContext) -> Solution {
     }
 
     let solution = problem.solve().unwrap();
-    println!("{}", solution[teasel_tiles_lymhurst]);
+    println!("herb_gardens_lymhurst {}", solution[herb_gardens_lymhurst]);
+    println!("pastures_lymhurst {}", solution[pastures_lymhurst]);
+    println!("farms_lymhurst {}", solution[farms_lymhurst]);
+    println!("teasel_tiles_lymhurst {}", solution[teasel_tiles_lymhurst]);
+    println!("muellin_tiles_lymhurst {}", solution[muellin_tiles_lymhurst]);
+    println!("yarrow_tiles_lymhurst {}", solution[yarrow_tiles_lymhurst]);
+    println!("cow_tiles_lymhurst {}", solution[cow_tiles_lymhurst]);
+    println!("pumpkin_tiles_lymhurst {}", solution[pumpkin_tiles_lymhurst]);
     solution
 }
