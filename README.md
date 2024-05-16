@@ -1,6 +1,23 @@
 # albion-island-balancer
 Tool for optimizing island crafting output in Albion Online
 
+## Install (for non-technical users)
+1. Click on "Releases"
+2. Download the latest release for your platform (windows, linux, mac)
+3. Run the file from your terminal / command prompt*
+
+*You may have to edit the permissions of the file to make it executable.
+
+## Build
+Requirements: git, cargo
+```
+git clone https://www.github.com/ChristianWSmith/albion-island-balancer
+cd albion-island-balancer
+cargo build --release
+cp target/release/albion-island-balancer .
+./albion-island-balancer --help
+```
+
 ## Example
 We'll start by finding out how to set up 3 fully-upgraded islands in Lymhurst for optimal Invisibility Potion production.  We'll run:
 ```
@@ -29,7 +46,7 @@ PlotPlan {
      cow_tiles_lymhurst: 18.0 
 }
 ```
-This means we should expect to produce ~100 Invisibility Potions each day by configuring our islands as described.
+This means we should expect to produce ~100 Invisibility Potions each day by configuring our islands as described.  The algorithm prescribes 39 herb gardens, 7 farm patches, and 2 pastures.  Note that this is 47 and not 48.  In this case, the algorithm determined that it couldn't increase throughput by using all 48 plots instead of 47, therefore it decided to "refund" us one plot.
 
 ## Usage
 Run:
