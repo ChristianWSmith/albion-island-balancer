@@ -4,7 +4,8 @@ Tool for optimizing island crafting output in Albion Online
 ## Install (for non-technical users)
 1. Click on "Releases"
 2. Download the latest release for your platform (windows/linux x86_64/i686, sorry mac)
-3. Run the file from your terminal / command prompt*
+3. Extract the executable from the zip
+4. Run the executable from your terminal / command prompt*
 
 *You may have to edit the permissions of the file to make it executable.
 
