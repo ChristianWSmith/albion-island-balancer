@@ -1,4 +1,6 @@
 use clap::ValueEnum;
+use std::fmt;
+use regex::Regex;
 
 #[derive(PartialEq, ValueEnum, Clone, Debug)]
 pub enum PremiumStatus {
@@ -274,4 +276,30 @@ pub struct PlotPlan {
     pub sheep_tiles_thetford: f64,
     pub pig_tiles_thetford: f64,
     pub cow_tiles_thetford: f64,
+}
+
+impl PlotPlan {
+    pub fn display(&self) -> String {
+        // Use the default Debug implementation to format the struct
+        let formatted = format!("{:?}", self);
+
+        // Define a regex to match fields with value 0.0
+        let re = Regex::new(r",\s*\w+: -?0\.0").unwrap();
+
+        // Remove fields with value 0.0
+        let result = re.replace_all(&formatted, "");
+
+        let re = Regex::new(r"\{").unwrap();
+        let result = re.replace_all(&result, "{\n    ");
+
+        let re = Regex::new(r",").unwrap();
+        let result = re.replace_all(&result, ",\n    ");
+
+        let re = Regex::new(r"\}").unwrap();
+        let result = re.replace_all(&result, "\n}");
+
+
+        // Return the cleaned string
+        result.to_string()
+    }
 }

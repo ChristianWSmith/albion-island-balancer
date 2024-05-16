@@ -173,6 +173,6 @@ fn main() {
         },
         target: *target,
     };
-    let model = optimize_plots(context);
-    println!("{:?}", model);
+    let plot_plan = optimize_plots(context);
+    println!("{}", plot_plan.display());
 }
