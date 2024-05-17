@@ -47,7 +47,7 @@ PlotPlan {
      cow_tiles_lymhurst: 18.0 
 }
 ```
-This means we should expect to produce ~100 Invisibility Potions each day by configuring our islands as described.  The algorithm prescribes 39 herb gardens, 7 farm patches, and 2 pastures.  Note that this is 47 and not 48.  In this case, the algorithm determined that it couldn't increase throughput by using all 48 plots instead of 47, therefore it decided to "refund" us one plot.
+This means we should expect to produce ~100 Invisibility Potions each day by configuring our islands as described.  The algorithm prescribes 39 herb gardens, 6 farm patches, and 2 pastures.  Note that this is 47 and not 48.  In this case, the algorithm determined that it couldn't increase throughput by using all 48 plots instead of 47, therefore it decided to "refund" us one plot.
 
 ## Usage
 Run:
