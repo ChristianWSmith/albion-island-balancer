@@ -4450,7 +4450,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
 
 fn smart_round(plot_map: &mut HashMap<Variable, f64>) {
     clip_near_zero(plot_map);
-    let final_sum: f64 = plot_map.values().sum();
+    let final_sum: f64 = plot_map.values().sum::<f64>().round();
     while !done_rounding(plot_map) {
         let current_sum: f64 = plot_map.values().sum();
         if current_sum > final_sum {

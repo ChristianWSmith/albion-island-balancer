@@ -1,6 +1,6 @@
 [package]
 name = "albion-island-balancer"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Christian Smith <smith.christian.william@gmail.com>"]
 edition = "2021"
 
