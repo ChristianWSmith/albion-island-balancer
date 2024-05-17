@@ -8,6 +8,24 @@ use crate::{
 use minilp::{ComparisonOp, OptimizationDirection, Problem, Variable};
 
 pub fn optimize_plots(context: ModelContext) -> PlotPlan {
+    let mut best_output = -f64::INFINITY;
+    let mut best_plot_plan: Option<PlotPlan> = None;
+    // minilp has some bugs, best approach is to just perform the
+    // math a lot of times and take the best result
+    for _ in 0..MINI_LP_RETRIES {
+        let plot_plan = _optimize_plots(context);
+        if plot_plan.is_ok() {
+            let plot_plan_unwrapped = plot_plan.unwrap();
+            if plot_plan_unwrapped.output > best_output {
+                best_output = plot_plan_unwrapped.output;
+                best_plot_plan = Some(plot_plan_unwrapped);
+            }
+        }
+    }
+    return best_plot_plan.unwrap();
+}
+
+fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, minilp::Error> {
     let mut problem = Problem::new(OptimizationDirection::Maximize);
 
     // variables
@@ -2887,7 +2905,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         }
     }
 
-    let solution = problem.solve().unwrap();
+    let solution = problem.solve()?;
 
     let mut solution_herb_gardens_brecilien = solution[herb_gardens_brecilien];
     let mut solution_farms_brecilien = solution[farms_brecilien];
@@ -3215,7 +3233,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         solution_pastures_thetford,
     );
 
-    let solution = problem.solve().unwrap();
+    let solution = problem.solve()?;
 
     // pack up the plot plan
     let plot_plan = PlotPlan {
@@ -3434,7 +3452,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         cow_tiles_thetford: solution[cow_tiles_thetford].ceil(),
     };
 
-    plot_plan
+    Ok(plot_plan)
 }
 
 fn smart_round(plot_map: &mut HashMap<Variable, f64>) {
@@ -3548,629 +3566,629 @@ mod tests {
     #[test]
     fn minor_energy_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MinorEnergyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5751.0);
     }
 
     #[test]
     fn minor_healing_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MinorHealingPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5751.0);
     }
 
     #[test]
     fn minor_gigantify_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MinorGigantifyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5751.0);
     }
 
     #[test]
     fn minor_resistance_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MinorResistancePotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5751.0);
     }
 
     #[test]
     fn minor_sticky_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MinorStickyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5751.0);
     }
 
     #[test]
     fn minor_poison_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MinorPoisonPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 3888.0);
     }
 
     #[test]
     fn energy_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::EnergyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1596.0);
     }
 
     #[test]
     fn healing_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::HealingPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1596.0);
     }
 
     #[test]
     fn gigantify_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::GigantifyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1089.0);
     }
 
     #[test]
     fn resistance_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::ResistancePotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1089.0);
     }
 
     #[test]
     fn sticky_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::StickyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1089.0);
     }
 
     #[test]
     fn poison_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::PoisonPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 825.0);
     }
 
     #[test]
     fn major_energy_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MajorEnergyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 439.0);
     }
 
     #[test]
     fn major_healing_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MajorHealingPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 436.0);
     }
 
     #[test]
     fn major_gigantify_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MajorGigantifyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 330.0);
     }
 
     #[test]
     fn major_resistance_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MajorResistancePotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 273.0);
     }
 
     #[test]
     fn major_sticky_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MajorStickyPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 271.0);
     }
 
     #[test]
     fn major_poison_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MajorPoisonPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 263.0);
     }
 
     #[test]
     fn invisibility_potion_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::InvisibilityPotion,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 263.0);
     }
 
     #[test]
     fn chicken_omelette_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::ChickenOmelette,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 7261.0);
     }
 
     #[test]
     fn goose_omelette_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::GooseOmelette,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 2420.0);
     }
 
     #[test]
     fn pork_omelette_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::PorkOmelette,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 815.0);
     }
 
     #[test]
     fn bean_salad_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::BeanSalad,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5913.0);
     }
 
     #[test]
     fn turnip_salad_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::TurnipSalad,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1944.0);
     }
 
     #[test]
     fn potato_salad_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::PotatoSalad,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 648.0);
     }
 
     #[test]
     fn goat_sandwich_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::GoatSandwich,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 7308.0);
     }
 
     #[test]
     fn mutton_sandwich_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MuttonSandwich,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 2420.0);
     }
 
     #[test]
     fn beef_sandwich_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::BeefSandwich,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 807.0);
     }
 
     #[test]
     fn carrot_soup_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::CarrotSoup,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 5832.0);
     }
 
     #[test]
     fn wheat_soup_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::WheatSoup,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 1917.0);
     }
 
     #[test]
     fn cabbage_soup_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::CabbageSoup,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 639.0);
     }
 
     #[test]
     fn goat_stew_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::GoatStew,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 6210.0);
     }
 
     #[test]
     fn mutton_stew_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::MuttonStew,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 2070.0);
     }
 
     #[test]
     fn beef_stew_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::BeefStew,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 690.0);
     }
 
     #[test]
     fn roast_chicken_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::RoastChicken,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 6585.0);
     }
 
     #[test]
     fn roast_goose_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::RoastGoose,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 2197.0);
     }
 
     #[test]
     fn roast_pork_test() {
         let context = ModelContext {
-            brecilien_plots: 0 as f64,
-            bridgewatch_plots: 0 as f64,
-            caerleon_plots: 0 as f64,
-            fort_sterling_plots: 0 as f64,
-            lymhurst_plots: 48 as f64,
-            martlock_plots: 0 as f64,
-            thetford_plots: 0 as f64,
+            brecilien_plots: 16 as f64,
+            bridgewatch_plots: 16 as f64,
+            caerleon_plots: 16 as f64,
+            fort_sterling_plots: 16 as f64,
+            lymhurst_plots: 16 as f64,
+            martlock_plots: 16 as f64,
+            thetford_plots: 16 as f64,
             premium_factor: PREMIUM_FACTOR,
             target: Product::RoastPork,
         };
-        let _ = optimize_plots(context);
-        assert!(true);
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 732.0);
     }
 }

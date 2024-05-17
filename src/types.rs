@@ -48,6 +48,7 @@ pub enum Product {
     RoastPork,
 }
 
+#[derive(Copy, Clone)]
 pub struct ModelContext {
     pub brecilien_plots: f64,
     pub bridgewatch_plots: f64,

@@ -2,6 +2,10 @@ mod constants;
 mod model;
 mod types;
 use clap::{Arg, Command};
+use std::thread;
+use std::time::Duration;
+use std::io::{self, Write};
+use std::sync::{Arc, Mutex};
 
 use crate::{
     constants::{FREE_FACTOR, PREMIUM_FACTOR}, model::optimize_plots, types::{ModelContext, PremiumStatus, Product}
@@ -171,6 +175,30 @@ fn main() {
         },
         target: *target,
     };
+
+    let frames = vec!["|", "/", "-", "\\"];
+    let mut frame_index = 0;
+    let running = Arc::new(Mutex::new(true));
+    let running_clone = Arc::clone(&running);
+
+    let loading_handle = thread::spawn(move || {
+        loop {
+            print!("Thinking {}  \r", frames[frame_index]);
+            io::stdout().flush().unwrap();
+            frame_index = (frame_index + 1) % frames.len();
+            thread::sleep(Duration::from_millis(100));
+            if !*running_clone.lock().unwrap() {
+                print!("            \r");
+                io::stdout().flush().unwrap();
+                break;
+            }
+        }
+    });
+
     let plot_plan = optimize_plots(context);
+
+    *running.lock().unwrap() = false;
+    loading_handle.join().unwrap();
+
     println!("{}", plot_plan.display());
 }
