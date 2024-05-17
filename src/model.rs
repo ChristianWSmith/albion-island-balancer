@@ -4263,7 +4263,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_brecilien
             + solution_muellin_tiles_brecilien
             + solution_yarrow_tiles_brecilien)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_brecilien: ((solution_carrot_tiles_brecilien
             + solution_bean_tiles_brecilien
@@ -4273,7 +4273,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_brecilien
             + solution_corn_tiles_brecilien
             + solution_pumpkin_tiles_brecilien)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_brecilien: ((solution_baby_chicken_tiles_brecilien
             + solution_kid_tiles_brecilien
@@ -4287,7 +4287,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_brecilien
             + solution_pig_tiles_brecilien
             + solution_cow_tiles_brecilien)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         herb_gardens_bridgewatch: ((solution_agaric_tiles_bridgewatch
             + solution_comfrey_tiles_bridgewatch
@@ -4296,7 +4296,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_bridgewatch
             + solution_muellin_tiles_bridgewatch
             + solution_yarrow_tiles_bridgewatch)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_bridgewatch: ((solution_carrot_tiles_bridgewatch
             + solution_bean_tiles_bridgewatch
@@ -4306,7 +4306,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_bridgewatch
             + solution_corn_tiles_bridgewatch
             + solution_pumpkin_tiles_bridgewatch)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_bridgewatch: ((solution_baby_chicken_tiles_bridgewatch
             + solution_kid_tiles_bridgewatch
@@ -4320,7 +4320,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_bridgewatch
             + solution_pig_tiles_bridgewatch
             + solution_cow_tiles_bridgewatch)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         herb_gardens_caerleon: ((solution_agaric_tiles_caerleon
             + solution_comfrey_tiles_caerleon
@@ -4329,7 +4329,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_caerleon
             + solution_muellin_tiles_caerleon
             + solution_yarrow_tiles_caerleon)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_caerleon: ((solution_carrot_tiles_caerleon
             + solution_bean_tiles_caerleon
@@ -4339,7 +4339,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_caerleon
             + solution_corn_tiles_caerleon
             + solution_pumpkin_tiles_caerleon)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_caerleon: ((solution_baby_chicken_tiles_caerleon
             + solution_kid_tiles_caerleon
@@ -4353,7 +4353,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_caerleon
             + solution_pig_tiles_caerleon
             + solution_cow_tiles_caerleon)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         herb_gardens_fort_sterling: ((solution_agaric_tiles_fort_sterling
             + solution_comfrey_tiles_fort_sterling
@@ -4362,7 +4362,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_fort_sterling
             + solution_muellin_tiles_fort_sterling
             + solution_yarrow_tiles_fort_sterling)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_fort_sterling: ((solution_carrot_tiles_fort_sterling
             + solution_bean_tiles_fort_sterling
@@ -4372,7 +4372,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_fort_sterling
             + solution_corn_tiles_fort_sterling
             + solution_pumpkin_tiles_fort_sterling)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_fort_sterling: ((solution_baby_chicken_tiles_fort_sterling
             + solution_kid_tiles_fort_sterling
@@ -4386,7 +4386,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_fort_sterling
             + solution_pig_tiles_fort_sterling
             + solution_cow_tiles_fort_sterling)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         herb_gardens_lymhurst: ((solution_agaric_tiles_lymhurst
             + solution_comfrey_tiles_lymhurst
@@ -4395,7 +4395,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_lymhurst
             + solution_muellin_tiles_lymhurst
             + solution_yarrow_tiles_lymhurst)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_lymhurst: ((solution_carrot_tiles_lymhurst
             + solution_bean_tiles_lymhurst
@@ -4405,7 +4405,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_lymhurst
             + solution_corn_tiles_lymhurst
             + solution_pumpkin_tiles_lymhurst)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_lymhurst: ((solution_baby_chicken_tiles_lymhurst
             + solution_kid_tiles_lymhurst
@@ -4419,7 +4419,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_lymhurst
             + solution_pig_tiles_lymhurst
             + solution_cow_tiles_lymhurst)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         herb_gardens_martlock: ((solution_agaric_tiles_martlock
             + solution_comfrey_tiles_martlock
@@ -4428,7 +4428,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_martlock
             + solution_muellin_tiles_martlock
             + solution_yarrow_tiles_martlock)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_martlock: ((solution_carrot_tiles_martlock
             + solution_bean_tiles_martlock
@@ -4438,7 +4438,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_martlock
             + solution_corn_tiles_martlock
             + solution_pumpkin_tiles_martlock)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_martlock: ((solution_baby_chicken_tiles_martlock
             + solution_kid_tiles_martlock
@@ -4452,7 +4452,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_martlock
             + solution_pig_tiles_martlock
             + solution_cow_tiles_martlock)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         herb_gardens_thetford: ((solution_agaric_tiles_thetford
             + solution_comfrey_tiles_thetford
@@ -4461,7 +4461,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_foxglove_tiles_thetford
             + solution_muellin_tiles_thetford
             + solution_yarrow_tiles_thetford)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         farms_thetford: ((solution_carrot_tiles_thetford
             + solution_bean_tiles_thetford
@@ -4471,7 +4471,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_potato_tiles_thetford
             + solution_corn_tiles_thetford
             + solution_pumpkin_tiles_thetford)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
         pastures_thetford: ((solution_baby_chicken_tiles_thetford
             + solution_kid_tiles_thetford
@@ -4485,7 +4485,7 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
             + solution_sheep_tiles_thetford
             + solution_pig_tiles_thetford
             + solution_cow_tiles_thetford)
-            / 9.0)
+            / TILES_PER_PLOT)
             .ceil(),
 
         agaric_tiles_brecilien: solution_agaric_tiles_brecilien,
