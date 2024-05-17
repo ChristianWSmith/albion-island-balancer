@@ -2921,7 +2921,10 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     plot_map.insert(herb_gardens_caerleon, solution_herb_gardens_caerleon);
     plot_map.insert(farms_caerleon, solution_farms_caerleon);
     plot_map.insert(pastures_caerleon, solution_pastures_caerleon);
-    plot_map.insert(herb_gardens_fort_sterling, solution_herb_gardens_fort_sterling);
+    plot_map.insert(
+        herb_gardens_fort_sterling,
+        solution_herb_gardens_fort_sterling,
+    );
     plot_map.insert(farms_fort_sterling, solution_farms_fort_sterling);
     plot_map.insert(pastures_fort_sterling, solution_pastures_fort_sterling);
     plot_map.insert(herb_gardens_lymhurst, solution_herb_gardens_lymhurst);
@@ -2934,7 +2937,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     plot_map.insert(farms_thetford, solution_farms_thetford);
     plot_map.insert(pastures_thetford, solution_pastures_thetford);
 
-    plot_map = smart_round(plot_map);
+    smart_round(&mut plot_map);
 
     solution_herb_gardens_brecilien = *plot_map.get(&herb_gardens_brecilien).unwrap();
     solution_farms_brecilien = *plot_map.get(&farms_brecilien).unwrap();
@@ -2957,28 +2960,6 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     solution_herb_gardens_thetford = *plot_map.get(&herb_gardens_thetford).unwrap();
     solution_farms_thetford = *plot_map.get(&farms_thetford).unwrap();
     solution_pastures_thetford = *plot_map.get(&pastures_thetford).unwrap();
-
-    println!("{}", solution_herb_gardens_brecilien);
-    println!("{}", solution_farms_brecilien);
-    println!("{}", solution_pastures_brecilien);
-    println!("{}", solution_herb_gardens_bridgewatch);
-    println!("{}", solution_farms_bridgewatch);
-    println!("{}", solution_pastures_bridgewatch);
-    println!("{}", solution_herb_gardens_caerleon);
-    println!("{}", solution_farms_caerleon);
-    println!("{}", solution_pastures_caerleon);
-    println!("{}", solution_herb_gardens_fort_sterling);
-    println!("{}", solution_farms_fort_sterling);
-    println!("{}", solution_pastures_fort_sterling);
-    println!("{}", solution_herb_gardens_lymhurst);
-    println!("{}", solution_farms_lymhurst);
-    println!("{}", solution_pastures_lymhurst);
-    println!("{}", solution_herb_gardens_martlock);
-    println!("{}", solution_farms_martlock);
-    println!("{}", solution_pastures_martlock);
-    println!("{}", solution_herb_gardens_thetford);
-    println!("{}", solution_farms_thetford);
-    println!("{}", solution_pastures_thetford);    
 
     // constrain patches
     problem.add_constraint(
@@ -3456,20 +3437,91 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     plot_plan
 }
 
-fn smart_round(mut plot_map: HashMap<Variable, f64>) -> HashMap<Variable, f64> {
+fn smart_round(plot_map: &mut HashMap<Variable, f64>) {
+    clip_near_zero(plot_map);
+    let final_sum: f64 = plot_map.values().sum();
+    while !done_rounding(plot_map) {
+        let current_sum: f64 = plot_map.values().sum();
+        if current_sum > final_sum {
+            smart_round_best_floor(plot_map);
+        } else if current_sum < final_sum {
+            smart_round_best_ceil(plot_map);
+        } else {
+            smart_round_best_round(plot_map);
+        }
+    }
+}
+
+fn smart_round_best_ceil(plot_map: &mut HashMap<Variable, f64>) {
+    let mut min_error = f64::INFINITY;
+    let mut min_var: Option<Variable> = None;
+    for (variable, value) in plot_map.iter_mut() {
+        if value.ceil() == *value {
+            continue
+        }
+        let e = (value.ceil() - *value).abs();
+        if e < min_error {
+            min_error = e;
+            min_var = Some(*variable);
+        }
+    }
+    let new_value = plot_map.get(&min_var.unwrap()).unwrap().ceil();
+    plot_map.insert(min_var.unwrap(), new_value);
+}
+
+fn smart_round_best_floor(plot_map: &mut HashMap<Variable, f64>) {
+    let mut min_error = f64::INFINITY;
+    let mut min_var: Option<Variable> = None;
+    for (variable, value) in plot_map.iter_mut() {
+        if value.floor() == *value {
+            continue
+        }
+        let e = (value.floor() - *value).abs();
+        if e < min_error {
+            min_error = e;
+            min_var = Some(*variable);
+        }
+    }
+    let new_value = plot_map.get(&min_var.unwrap()).unwrap().floor();
+    plot_map.insert(min_var.unwrap(), new_value);
+}
+
+fn smart_round_best_round(plot_map: &mut HashMap<Variable, f64>) {
+    let mut min_error = f64::INFINITY;
+    let mut min_var: Option<Variable> = None;
+    for (variable, value) in plot_map.iter_mut() {
+        if value.round() == *value {
+            continue
+        }
+        let e = (value.round() - *value).abs();
+        if e < min_error {
+            min_error = e;
+            min_var = Some(*variable);
+        }
+    }
+    let new_value = plot_map.get(&min_var.unwrap()).unwrap().round();
+    plot_map.insert(min_var.unwrap(), new_value);
+}
+
+fn clip_near_zero(plot_map: &mut HashMap<Variable, f64>) {
     let mut update_map = HashMap::new();
     for (variable, value) in plot_map.iter_mut() {
         if *value <= ALMOST_ZERO {
             update_map.insert(*variable, 0.0);
-        } else {
-            // TODO: perform "smart rounding"
-            update_map.insert(*variable, value.round().max(1.0));
         }
     }
     for (variable, value) in update_map.iter_mut() {
         plot_map.insert(*variable, *value);
     }
-    plot_map
+}
+
+fn done_rounding(plot_map: &mut HashMap<Variable, f64>) -> bool {
+    for (_, value) in plot_map.iter_mut() {
+        if *value != value.round() {
+            return false;
+        }
+    }
+    return true;
 }
 
 #[cfg(test)]
