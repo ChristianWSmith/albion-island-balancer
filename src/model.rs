@@ -3450,6 +3450,23 @@ fn smart_round(plot_map: &mut HashMap<Variable, f64>) {
             smart_round_best_round(plot_map);
         }
     }
+    let mut current_sum: f64 = plot_map.values().sum();
+    while current_sum > final_sum {
+        smart_round_reduce_max(plot_map);
+        current_sum = plot_map.values().sum();
+    }
+}
+
+fn smart_round_reduce_max(plot_map: &mut HashMap<Variable, f64>) {
+    let mut max_val = -f64::INFINITY;
+    let mut max_var: Option<Variable> = None;
+    for (variable, value) in plot_map.iter_mut() {
+        if *value > max_val {
+            max_val = *value;
+            max_var = Some(*variable);
+        }
+    }
+    plot_map.insert(max_var.unwrap(), (max_val - 1.0).max(1.0));
 }
 
 fn smart_round_best_ceil(plot_map: &mut HashMap<Variable, f64>) {
@@ -3466,7 +3483,7 @@ fn smart_round_best_ceil(plot_map: &mut HashMap<Variable, f64>) {
         }
     }
     let new_value = plot_map.get(&min_var.unwrap()).unwrap().ceil();
-    plot_map.insert(min_var.unwrap(), new_value);
+    plot_map.insert(min_var.unwrap(), new_value.max(1.0));
 }
 
 fn smart_round_best_floor(plot_map: &mut HashMap<Variable, f64>) {
@@ -3483,7 +3500,7 @@ fn smart_round_best_floor(plot_map: &mut HashMap<Variable, f64>) {
         }
     }
     let new_value = plot_map.get(&min_var.unwrap()).unwrap().floor();
-    plot_map.insert(min_var.unwrap(), new_value);
+    plot_map.insert(min_var.unwrap(), new_value.max(1.0));
 }
 
 fn smart_round_best_round(plot_map: &mut HashMap<Variable, f64>) {
@@ -3500,7 +3517,7 @@ fn smart_round_best_round(plot_map: &mut HashMap<Variable, f64>) {
         }
     }
     let new_value = plot_map.get(&min_var.unwrap()).unwrap().round();
-    plot_map.insert(min_var.unwrap(), new_value);
+    plot_map.insert(min_var.unwrap(), new_value.max(1.0));
 }
 
 fn clip_near_zero(plot_map: &mut HashMap<Variable, f64>) {
