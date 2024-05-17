@@ -3466,7 +3466,7 @@ fn smart_round_reduce_max(plot_map: &mut HashMap<Variable, f64>) {
             max_var = Some(*variable);
         }
     }
-    plot_map.insert(max_var.unwrap(), (max_val - 1.0).max(1.0));
+    plot_map.insert(max_var.unwrap(), (max_val - 1.0));
 }
 
 fn smart_round_best_ceil(plot_map: &mut HashMap<Variable, f64>) {
