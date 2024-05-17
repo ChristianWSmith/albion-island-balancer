@@ -20,3 +20,4 @@ pub const L09_INGREDIENT: f64 = 36.0;
 pub const L10_INGREDIENT: f64 = 48.0;
 pub const L11_INGREDIENT: f64 = 72.0;
 pub const L12_INGREDIENT: f64 = 144.0;
+pub const ALMOST_ZERO: f64 = 0.0001;

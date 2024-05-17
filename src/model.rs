@@ -1,9 +1,11 @@
+use std::collections::HashMap;
+
 use crate::{
     constants::*,
     types::{PlotPlan, Product},
     ModelContext,
 };
-use minilp::{ComparisonOp, OptimizationDirection, Problem};
+use minilp::{ComparisonOp, OptimizationDirection, Problem, Variable};
 
 pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     let mut problem = Problem::new(OptimizationDirection::Maximize);
@@ -2887,343 +2889,350 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
 
     let solution = problem.solve().unwrap();
 
+    let mut solution_herb_gardens_brecilien = solution[herb_gardens_brecilien];
+    let mut solution_farms_brecilien = solution[farms_brecilien];
+    let mut solution_pastures_brecilien = solution[pastures_brecilien];
+    let mut solution_herb_gardens_bridgewatch = solution[herb_gardens_bridgewatch];
+    let mut solution_farms_bridgewatch = solution[farms_bridgewatch];
+    let mut solution_pastures_bridgewatch = solution[pastures_bridgewatch];
+    let mut solution_herb_gardens_caerleon = solution[herb_gardens_caerleon];
+    let mut solution_farms_caerleon = solution[farms_caerleon];
+    let mut solution_pastures_caerleon = solution[pastures_caerleon];
+    let mut solution_herb_gardens_fort_sterling = solution[herb_gardens_fort_sterling];
+    let mut solution_farms_fort_sterling = solution[farms_fort_sterling];
+    let mut solution_pastures_fort_sterling = solution[pastures_fort_sterling];
+    let mut solution_herb_gardens_lymhurst = solution[herb_gardens_lymhurst];
+    let mut solution_farms_lymhurst = solution[farms_lymhurst];
+    let mut solution_pastures_lymhurst = solution[pastures_lymhurst];
+    let mut solution_herb_gardens_martlock = solution[herb_gardens_martlock];
+    let mut solution_farms_martlock = solution[farms_martlock];
+    let mut solution_pastures_martlock = solution[pastures_martlock];
+    let mut solution_herb_gardens_thetford = solution[herb_gardens_thetford];
+    let mut solution_farms_thetford = solution[farms_thetford];
+    let mut solution_pastures_thetford = solution[pastures_thetford];
+
+    let mut plot_map = HashMap::new();
+    plot_map.insert(herb_gardens_brecilien, solution_herb_gardens_brecilien);
+    plot_map.insert(farms_brecilien, solution_farms_brecilien);
+    plot_map.insert(pastures_brecilien, solution_pastures_brecilien);
+    plot_map.insert(herb_gardens_bridgewatch, solution_herb_gardens_bridgewatch);
+    plot_map.insert(farms_bridgewatch, solution_farms_bridgewatch);
+    plot_map.insert(pastures_bridgewatch, solution_pastures_bridgewatch);
+    plot_map.insert(herb_gardens_caerleon, solution_herb_gardens_caerleon);
+    plot_map.insert(farms_caerleon, solution_farms_caerleon);
+    plot_map.insert(pastures_caerleon, solution_pastures_caerleon);
+    plot_map.insert(herb_gardens_fort_sterling, solution_herb_gardens_fort_sterling);
+    plot_map.insert(farms_fort_sterling, solution_farms_fort_sterling);
+    plot_map.insert(pastures_fort_sterling, solution_pastures_fort_sterling);
+    plot_map.insert(herb_gardens_lymhurst, solution_herb_gardens_lymhurst);
+    plot_map.insert(farms_lymhurst, solution_farms_lymhurst);
+    plot_map.insert(pastures_lymhurst, solution_pastures_lymhurst);
+    plot_map.insert(herb_gardens_martlock, solution_herb_gardens_martlock);
+    plot_map.insert(farms_martlock, solution_farms_martlock);
+    plot_map.insert(pastures_martlock, solution_pastures_martlock);
+    plot_map.insert(herb_gardens_thetford, solution_herb_gardens_thetford);
+    plot_map.insert(farms_thetford, solution_farms_thetford);
+    plot_map.insert(pastures_thetford, solution_pastures_thetford);
+
+    plot_map = smart_round(plot_map);
+
+    solution_herb_gardens_brecilien = *plot_map.get(&herb_gardens_brecilien).unwrap();
+    solution_farms_brecilien = *plot_map.get(&farms_brecilien).unwrap();
+    solution_pastures_brecilien = *plot_map.get(&pastures_brecilien).unwrap();
+    solution_herb_gardens_bridgewatch = *plot_map.get(&herb_gardens_bridgewatch).unwrap();
+    solution_farms_bridgewatch = *plot_map.get(&farms_bridgewatch).unwrap();
+    solution_pastures_bridgewatch = *plot_map.get(&pastures_bridgewatch).unwrap();
+    solution_herb_gardens_caerleon = *plot_map.get(&herb_gardens_caerleon).unwrap();
+    solution_farms_caerleon = *plot_map.get(&farms_caerleon).unwrap();
+    solution_pastures_caerleon = *plot_map.get(&pastures_caerleon).unwrap();
+    solution_herb_gardens_fort_sterling = *plot_map.get(&herb_gardens_fort_sterling).unwrap();
+    solution_farms_fort_sterling = *plot_map.get(&farms_fort_sterling).unwrap();
+    solution_pastures_fort_sterling = *plot_map.get(&pastures_fort_sterling).unwrap();
+    solution_herb_gardens_lymhurst = *plot_map.get(&herb_gardens_lymhurst).unwrap();
+    solution_farms_lymhurst = *plot_map.get(&farms_lymhurst).unwrap();
+    solution_pastures_lymhurst = *plot_map.get(&pastures_lymhurst).unwrap();
+    solution_herb_gardens_martlock = *plot_map.get(&herb_gardens_martlock).unwrap();
+    solution_farms_martlock = *plot_map.get(&farms_martlock).unwrap();
+    solution_pastures_martlock = *plot_map.get(&pastures_martlock).unwrap();
+    solution_herb_gardens_thetford = *plot_map.get(&herb_gardens_thetford).unwrap();
+    solution_farms_thetford = *plot_map.get(&farms_thetford).unwrap();
+    solution_pastures_thetford = *plot_map.get(&pastures_thetford).unwrap();
+
+    println!("{}", solution_herb_gardens_brecilien);
+    println!("{}", solution_farms_brecilien);
+    println!("{}", solution_pastures_brecilien);
+    println!("{}", solution_herb_gardens_bridgewatch);
+    println!("{}", solution_farms_bridgewatch);
+    println!("{}", solution_pastures_bridgewatch);
+    println!("{}", solution_herb_gardens_caerleon);
+    println!("{}", solution_farms_caerleon);
+    println!("{}", solution_pastures_caerleon);
+    println!("{}", solution_herb_gardens_fort_sterling);
+    println!("{}", solution_farms_fort_sterling);
+    println!("{}", solution_pastures_fort_sterling);
+    println!("{}", solution_herb_gardens_lymhurst);
+    println!("{}", solution_farms_lymhurst);
+    println!("{}", solution_pastures_lymhurst);
+    println!("{}", solution_herb_gardens_martlock);
+    println!("{}", solution_farms_martlock);
+    println!("{}", solution_pastures_martlock);
+    println!("{}", solution_herb_gardens_thetford);
+    println!("{}", solution_farms_thetford);
+    println!("{}", solution_pastures_thetford);    
+
     // constrain patches
     // TODO: see if there's a better way than using .round()
     problem.add_constraint(
         &[(
             herb_gardens_brecilien,
-            if solution[herb_gardens_brecilien] == 0.0 {
+            if solution_herb_gardens_brecilien == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_brecilien] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_brecilien].round().max(1.0)
-        },
+        solution_herb_gardens_brecilien,
     );
     problem.add_constraint(
         &[(
             farms_brecilien,
-            if solution[farms_brecilien] == 0.0 {
+            if solution_farms_brecilien == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_brecilien] == 0.0 {
-            0.0
-        } else {
-            solution[farms_brecilien].round().max(1.0)
-        },
+        solution_farms_brecilien,
     );
     problem.add_constraint(
         &[(
             pastures_brecilien,
-            if solution[pastures_brecilien] == 0.0 {
+            if solution_pastures_brecilien == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_brecilien] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_brecilien].round().max(1.0)
-        },
+        solution_pastures_brecilien,
     );
     problem.add_constraint(
         &[(
             herb_gardens_bridgewatch,
-            if solution[herb_gardens_bridgewatch] == 0.0 {
+            if solution_herb_gardens_bridgewatch == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_bridgewatch] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_bridgewatch].round().max(1.0)
-        },
+        solution_herb_gardens_bridgewatch,
     );
     problem.add_constraint(
         &[(
             farms_bridgewatch,
-            if solution[farms_bridgewatch] == 0.0 {
+            if solution_farms_bridgewatch == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_bridgewatch] == 0.0 {
-            0.0
-        } else {
-            solution[farms_bridgewatch].round().max(1.0)
-        },
+        solution_farms_bridgewatch,
     );
     problem.add_constraint(
         &[(
             pastures_bridgewatch,
-            if solution[pastures_bridgewatch] == 0.0 {
+            if solution_pastures_bridgewatch == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_bridgewatch] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_bridgewatch].round().max(1.0)
-        },
+        solution_pastures_bridgewatch,
     );
     problem.add_constraint(
         &[(
             herb_gardens_caerleon,
-            if solution[herb_gardens_caerleon] == 0.0 {
+            if solution_herb_gardens_caerleon == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_caerleon] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_caerleon].round().max(1.0)
-        },
+        solution_herb_gardens_caerleon,
     );
     problem.add_constraint(
         &[(
             farms_caerleon,
-            if solution[farms_caerleon] == 0.0 {
+            if solution_farms_caerleon == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_caerleon] == 0.0 {
-            0.0
-        } else {
-            solution[farms_caerleon].round().max(1.0)
-        },
+        solution_farms_caerleon,
     );
     problem.add_constraint(
         &[(
             pastures_caerleon,
-            if solution[pastures_caerleon] == 0.0 {
+            if solution_pastures_caerleon == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_caerleon] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_caerleon].round().max(1.0)
-        },
+        solution_pastures_caerleon,
     );
     problem.add_constraint(
         &[(
             herb_gardens_fort_sterling,
-            if solution[herb_gardens_fort_sterling] == 0.0 {
+            if solution_herb_gardens_fort_sterling == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_fort_sterling] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_fort_sterling].round().max(1.0)
-        },
+        solution_herb_gardens_fort_sterling,
     );
     problem.add_constraint(
         &[(
             farms_fort_sterling,
-            if solution[farms_fort_sterling] == 0.0 {
+            if solution_farms_fort_sterling == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_fort_sterling] == 0.0 {
-            0.0
-        } else {
-            solution[farms_fort_sterling].round().max(1.0)
-        },
+        solution_farms_fort_sterling,
     );
     problem.add_constraint(
         &[(
             pastures_fort_sterling,
-            if solution[pastures_fort_sterling] == 0.0 {
+            if solution_pastures_fort_sterling == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_fort_sterling] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_fort_sterling].round().max(1.0)
-        },
+        solution_pastures_fort_sterling,
     );
     problem.add_constraint(
         &[(
             herb_gardens_lymhurst,
-            if solution[herb_gardens_lymhurst] == 0.0 {
+            if solution_herb_gardens_lymhurst == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_lymhurst] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_lymhurst].round().max(1.0)
-        },
+        solution_herb_gardens_lymhurst,
     );
     problem.add_constraint(
         &[(
             farms_lymhurst,
-            if solution[farms_lymhurst] == 0.0 {
+            if solution_farms_lymhurst == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_lymhurst] == 0.0 {
-            0.0
-        } else {
-            solution[farms_lymhurst].round().max(1.0)
-        },
+        solution_farms_lymhurst,
     );
     problem.add_constraint(
         &[(
             pastures_lymhurst,
-            if solution[pastures_lymhurst] == 0.0 {
+            if solution_pastures_lymhurst == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_lymhurst] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_lymhurst].round().max(1.0)
-        },
+        solution_pastures_lymhurst,
     );
     problem.add_constraint(
         &[(
             herb_gardens_martlock,
-            if solution[herb_gardens_martlock] == 0.0 {
+            if solution_herb_gardens_martlock == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_martlock] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_martlock].round().max(1.0)
-        },
+        solution_herb_gardens_martlock,
     );
     problem.add_constraint(
         &[(
             farms_martlock,
-            if solution[farms_martlock] == 0.0 {
+            if solution_farms_martlock == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_martlock] == 0.0 {
-            0.0
-        } else {
-            solution[farms_martlock].round().max(1.0)
-        },
+        solution_farms_martlock,
     );
     problem.add_constraint(
         &[(
             pastures_martlock,
-            if solution[pastures_martlock] == 0.0 {
+            if solution_pastures_martlock == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_martlock] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_martlock].round().max(1.0)
-        },
+        solution_pastures_martlock,
     );
     problem.add_constraint(
         &[(
             herb_gardens_thetford,
-            if solution[herb_gardens_thetford] == 0.0 {
+            if solution_herb_gardens_thetford == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[herb_gardens_thetford] == 0.0 {
-            0.0
-        } else {
-            solution[herb_gardens_thetford].round().max(1.0)
-        },
+        solution_herb_gardens_thetford,
     );
     problem.add_constraint(
         &[(
             farms_thetford,
-            if solution[farms_thetford] == 0.0 {
+            if solution_farms_thetford == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[farms_thetford] == 0.0 {
-            0.0
-        } else {
-            solution[farms_thetford].round().max(1.0)
-        },
+        solution_farms_thetford,
     );
     problem.add_constraint(
         &[(
             pastures_thetford,
-            if solution[pastures_thetford] == 0.0 {
+            if solution_pastures_thetford == 0.0 {
                 10.0
             } else {
                 1.0
             },
         )],
         ComparisonOp::Eq,
-        if solution[pastures_thetford] == 0.0 {
-            0.0
-        } else {
-            solution[pastures_thetford].round().max(1.0)
-        },
+        solution_pastures_thetford,
     );
 
     let solution = problem.solve().unwrap();
@@ -3446,6 +3455,22 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     };
 
     plot_plan
+}
+
+fn smart_round(mut plot_map: HashMap<Variable, f64>) -> HashMap<Variable, f64> {
+    let mut update_map = HashMap::new();
+    for (variable, value) in plot_map.iter_mut() {
+        if *value <= ALMOST_ZERO {
+            update_map.insert(*variable, 0.0);
+        } else {
+            // TODO: perform "smart rounding"
+            update_map.insert(*variable, value.round().max(1.0));
+        }
+    }
+    for (variable, value) in update_map.iter_mut() {
+        plot_map.insert(*variable, *value);
+    }
+    plot_map
 }
 
 #[cfg(test)]
