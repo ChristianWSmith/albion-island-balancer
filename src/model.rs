@@ -13,16 +13,40 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     // minilp has some bugs, best approach is to just perform the
     // math a lot of times and take the best result
     for _ in 0..MINI_LP_RETRIES {
-        let plot_plan = _optimize_plots(context);
-        if plot_plan.is_ok() {
-            let plot_plan_unwrapped = plot_plan.unwrap();
-            if plot_plan_unwrapped.output > best_output {
-                best_output = plot_plan_unwrapped.output;
-                best_plot_plan = Some(plot_plan_unwrapped);
+        let mut temp_context = context.clone();
+        let mut plot_plan = PlotPlan::default();
+
+        loop {
+            if temp_context.brecilien_plots
+                + temp_context.bridgewatch_plots
+                + temp_context.caerleon_plots
+                + temp_context.fort_sterling_plots
+                + temp_context.lymhurst_plots
+                + temp_context.martlock_plots
+                + temp_context.thetford_plots
+                == 0.0
+            {
+                break;
+            }
+            let temp_plot_plan = _optimize_plots(temp_context);
+            if temp_plot_plan.is_ok() {
+                let temp_plot_plan_unwrapped = temp_plot_plan.unwrap();
+                if temp_plot_plan_unwrapped.output == 0.0 {
+                    break;
+                }
+                plot_plan = plot_plan + temp_plot_plan_unwrapped;
+                temp_context.subtract_plot_plan(temp_plot_plan_unwrapped);
+                if plot_plan.output > best_output {
+                    best_output = plot_plan.output;
+                    best_plot_plan = Some(plot_plan);
+                }
             }
         }
     }
-    return best_plot_plan.unwrap();
+    match best_plot_plan {
+        Some(plot_plan) => { return plot_plan },
+        None => return PlotPlan::default(),
+    }
 }
 
 fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, minilp::Error> {
@@ -4232,27 +4256,237 @@ fn _optimize_plots(context: ModelContext) -> core::result::Result<PlotPlan, mini
     let plot_plan = PlotPlan {
         output: solution.objective().round(),
 
-        herb_gardens_brecilien: solution[herb_gardens_brecilien],
-        farms_brecilien: solution[farms_brecilien],
-        pastures_brecilien: solution[pastures_brecilien],
-        herb_gardens_bridgewatch: solution[herb_gardens_bridgewatch],
-        farms_bridgewatch: solution[farms_bridgewatch],
-        pastures_bridgewatch: solution[pastures_bridgewatch],
-        herb_gardens_caerleon: solution[herb_gardens_caerleon],
-        farms_caerleon: solution[farms_caerleon],
-        pastures_caerleon: solution[pastures_caerleon],
-        herb_gardens_fort_sterling: solution[herb_gardens_fort_sterling],
-        farms_fort_sterling: solution[farms_fort_sterling],
-        pastures_fort_sterling: solution[pastures_fort_sterling],
-        herb_gardens_lymhurst: solution[herb_gardens_lymhurst],
-        farms_lymhurst: solution[farms_lymhurst],
-        pastures_lymhurst: solution[pastures_lymhurst],
-        herb_gardens_martlock: solution[herb_gardens_martlock],
-        farms_martlock: solution[farms_martlock],
-        pastures_martlock: solution[pastures_martlock],
-        herb_gardens_thetford: solution[herb_gardens_thetford],
-        farms_thetford: solution[farms_thetford],
-        pastures_thetford: solution[pastures_thetford],
+        herb_gardens_brecilien: ((solution_agaric_tiles_brecilien
+            + solution_comfrey_tiles_brecilien
+            + solution_burdock_tiles_brecilien
+            + solution_teasel_tiles_brecilien
+            + solution_foxglove_tiles_brecilien
+            + solution_muellin_tiles_brecilien
+            + solution_yarrow_tiles_brecilien)
+            / 9.0)
+            .ceil(),
+        farms_brecilien: ((solution_carrot_tiles_brecilien
+            + solution_bean_tiles_brecilien
+            + solution_wheat_tiles_brecilien
+            + solution_turnip_tiles_brecilien
+            + solution_cabbage_tiles_brecilien
+            + solution_potato_tiles_brecilien
+            + solution_corn_tiles_brecilien
+            + solution_pumpkin_tiles_brecilien)
+            / 9.0)
+            .ceil(),
+        pastures_brecilien: ((solution_baby_chicken_tiles_brecilien
+            + solution_kid_tiles_brecilien
+            + solution_gosling_tiles_brecilien
+            + solution_lamb_tiles_brecilien
+            + solution_piglet_tiles_brecilien
+            + solution_calf_tiles_brecilien
+            + solution_chicken_tiles_brecilien
+            + solution_goat_tiles_brecilien
+            + solution_goose_tiles_brecilien
+            + solution_sheep_tiles_brecilien
+            + solution_pig_tiles_brecilien
+            + solution_cow_tiles_brecilien)
+            / 9.0)
+            .ceil(),
+        herb_gardens_bridgewatch: ((solution_agaric_tiles_bridgewatch
+            + solution_comfrey_tiles_bridgewatch
+            + solution_burdock_tiles_bridgewatch
+            + solution_teasel_tiles_bridgewatch
+            + solution_foxglove_tiles_bridgewatch
+            + solution_muellin_tiles_bridgewatch
+            + solution_yarrow_tiles_bridgewatch)
+            / 9.0)
+            .ceil(),
+        farms_bridgewatch: ((solution_carrot_tiles_bridgewatch
+            + solution_bean_tiles_bridgewatch
+            + solution_wheat_tiles_bridgewatch
+            + solution_turnip_tiles_bridgewatch
+            + solution_cabbage_tiles_bridgewatch
+            + solution_potato_tiles_bridgewatch
+            + solution_corn_tiles_bridgewatch
+            + solution_pumpkin_tiles_bridgewatch)
+            / 9.0)
+            .ceil(),
+        pastures_bridgewatch: ((solution_baby_chicken_tiles_bridgewatch
+            + solution_kid_tiles_bridgewatch
+            + solution_gosling_tiles_bridgewatch
+            + solution_lamb_tiles_bridgewatch
+            + solution_piglet_tiles_bridgewatch
+            + solution_calf_tiles_bridgewatch
+            + solution_chicken_tiles_bridgewatch
+            + solution_goat_tiles_bridgewatch
+            + solution_goose_tiles_bridgewatch
+            + solution_sheep_tiles_bridgewatch
+            + solution_pig_tiles_bridgewatch
+            + solution_cow_tiles_bridgewatch)
+            / 9.0)
+            .ceil(),
+        herb_gardens_caerleon: ((solution_agaric_tiles_caerleon
+            + solution_comfrey_tiles_caerleon
+            + solution_burdock_tiles_caerleon
+            + solution_teasel_tiles_caerleon
+            + solution_foxglove_tiles_caerleon
+            + solution_muellin_tiles_caerleon
+            + solution_yarrow_tiles_caerleon)
+            / 9.0)
+            .ceil(),
+        farms_caerleon: ((solution_carrot_tiles_caerleon
+            + solution_bean_tiles_caerleon
+            + solution_wheat_tiles_caerleon
+            + solution_turnip_tiles_caerleon
+            + solution_cabbage_tiles_caerleon
+            + solution_potato_tiles_caerleon
+            + solution_corn_tiles_caerleon
+            + solution_pumpkin_tiles_caerleon)
+            / 9.0)
+            .ceil(),
+        pastures_caerleon: ((solution_baby_chicken_tiles_caerleon
+            + solution_kid_tiles_caerleon
+            + solution_gosling_tiles_caerleon
+            + solution_lamb_tiles_caerleon
+            + solution_piglet_tiles_caerleon
+            + solution_calf_tiles_caerleon
+            + solution_chicken_tiles_caerleon
+            + solution_goat_tiles_caerleon
+            + solution_goose_tiles_caerleon
+            + solution_sheep_tiles_caerleon
+            + solution_pig_tiles_caerleon
+            + solution_cow_tiles_caerleon)
+            / 9.0)
+            .ceil(),
+        herb_gardens_fort_sterling: ((solution_agaric_tiles_fort_sterling
+            + solution_comfrey_tiles_fort_sterling
+            + solution_burdock_tiles_fort_sterling
+            + solution_teasel_tiles_fort_sterling
+            + solution_foxglove_tiles_fort_sterling
+            + solution_muellin_tiles_fort_sterling
+            + solution_yarrow_tiles_fort_sterling)
+            / 9.0)
+            .ceil(),
+        farms_fort_sterling: ((solution_carrot_tiles_fort_sterling
+            + solution_bean_tiles_fort_sterling
+            + solution_wheat_tiles_fort_sterling
+            + solution_turnip_tiles_fort_sterling
+            + solution_cabbage_tiles_fort_sterling
+            + solution_potato_tiles_fort_sterling
+            + solution_corn_tiles_fort_sterling
+            + solution_pumpkin_tiles_fort_sterling)
+            / 9.0)
+            .ceil(),
+        pastures_fort_sterling: ((solution_baby_chicken_tiles_fort_sterling
+            + solution_kid_tiles_fort_sterling
+            + solution_gosling_tiles_fort_sterling
+            + solution_lamb_tiles_fort_sterling
+            + solution_piglet_tiles_fort_sterling
+            + solution_calf_tiles_fort_sterling
+            + solution_chicken_tiles_fort_sterling
+            + solution_goat_tiles_fort_sterling
+            + solution_goose_tiles_fort_sterling
+            + solution_sheep_tiles_fort_sterling
+            + solution_pig_tiles_fort_sterling
+            + solution_cow_tiles_fort_sterling)
+            / 9.0)
+            .ceil(),
+        herb_gardens_lymhurst: ((solution_agaric_tiles_lymhurst
+            + solution_comfrey_tiles_lymhurst
+            + solution_burdock_tiles_lymhurst
+            + solution_teasel_tiles_lymhurst
+            + solution_foxglove_tiles_lymhurst
+            + solution_muellin_tiles_lymhurst
+            + solution_yarrow_tiles_lymhurst)
+            / 9.0)
+            .ceil(),
+        farms_lymhurst: ((solution_carrot_tiles_lymhurst
+            + solution_bean_tiles_lymhurst
+            + solution_wheat_tiles_lymhurst
+            + solution_turnip_tiles_lymhurst
+            + solution_cabbage_tiles_lymhurst
+            + solution_potato_tiles_lymhurst
+            + solution_corn_tiles_lymhurst
+            + solution_pumpkin_tiles_lymhurst)
+            / 9.0)
+            .ceil(),
+        pastures_lymhurst: ((solution_baby_chicken_tiles_lymhurst
+            + solution_kid_tiles_lymhurst
+            + solution_gosling_tiles_lymhurst
+            + solution_lamb_tiles_lymhurst
+            + solution_piglet_tiles_lymhurst
+            + solution_calf_tiles_lymhurst
+            + solution_chicken_tiles_lymhurst
+            + solution_goat_tiles_lymhurst
+            + solution_goose_tiles_lymhurst
+            + solution_sheep_tiles_lymhurst
+            + solution_pig_tiles_lymhurst
+            + solution_cow_tiles_lymhurst)
+            / 9.0)
+            .ceil(),
+        herb_gardens_martlock: ((solution_agaric_tiles_martlock
+            + solution_comfrey_tiles_martlock
+            + solution_burdock_tiles_martlock
+            + solution_teasel_tiles_martlock
+            + solution_foxglove_tiles_martlock
+            + solution_muellin_tiles_martlock
+            + solution_yarrow_tiles_martlock)
+            / 9.0)
+            .ceil(),
+        farms_martlock: ((solution_carrot_tiles_martlock
+            + solution_bean_tiles_martlock
+            + solution_wheat_tiles_martlock
+            + solution_turnip_tiles_martlock
+            + solution_cabbage_tiles_martlock
+            + solution_potato_tiles_martlock
+            + solution_corn_tiles_martlock
+            + solution_pumpkin_tiles_martlock)
+            / 9.0)
+            .ceil(),
+        pastures_martlock: ((solution_baby_chicken_tiles_martlock
+            + solution_kid_tiles_martlock
+            + solution_gosling_tiles_martlock
+            + solution_lamb_tiles_martlock
+            + solution_piglet_tiles_martlock
+            + solution_calf_tiles_martlock
+            + solution_chicken_tiles_martlock
+            + solution_goat_tiles_martlock
+            + solution_goose_tiles_martlock
+            + solution_sheep_tiles_martlock
+            + solution_pig_tiles_martlock
+            + solution_cow_tiles_martlock)
+            / 9.0)
+            .ceil(),
+        herb_gardens_thetford: ((solution_agaric_tiles_thetford
+            + solution_comfrey_tiles_thetford
+            + solution_burdock_tiles_thetford
+            + solution_teasel_tiles_thetford
+            + solution_foxglove_tiles_thetford
+            + solution_muellin_tiles_thetford
+            + solution_yarrow_tiles_thetford)
+            / 9.0)
+            .ceil(),
+        farms_thetford: ((solution_carrot_tiles_thetford
+            + solution_bean_tiles_thetford
+            + solution_wheat_tiles_thetford
+            + solution_turnip_tiles_thetford
+            + solution_cabbage_tiles_thetford
+            + solution_potato_tiles_thetford
+            + solution_corn_tiles_thetford
+            + solution_pumpkin_tiles_thetford)
+            / 9.0)
+            .ceil(),
+        pastures_thetford: ((solution_baby_chicken_tiles_thetford
+            + solution_kid_tiles_thetford
+            + solution_gosling_tiles_thetford
+            + solution_lamb_tiles_thetford
+            + solution_piglet_tiles_thetford
+            + solution_calf_tiles_thetford
+            + solution_chicken_tiles_thetford
+            + solution_goat_tiles_thetford
+            + solution_goose_tiles_thetford
+            + solution_sheep_tiles_thetford
+            + solution_pig_tiles_thetford
+            + solution_cow_tiles_thetford)
+            / 9.0)
+            .ceil(),
 
         agaric_tiles_brecilien: solution_agaric_tiles_brecilien,
         comfrey_tiles_brecilien: solution_comfrey_tiles_brecilien,
@@ -4706,7 +4940,7 @@ mod tests {
             target: Product::GigantifyPotion,
         };
         let plot_plan = optimize_plots(context);
-        assert_eq!(plot_plan.output, 1089.0);
+        assert_eq!(plot_plan.output, 1123.0);
     }
 
     #[test]
@@ -4723,7 +4957,7 @@ mod tests {
             target: Product::ResistancePotion,
         };
         let plot_plan = optimize_plots(context);
-        assert_eq!(plot_plan.output, 1089.0);
+        assert_eq!(plot_plan.output, 1134.0);
     }
 
     #[test]
@@ -4740,7 +4974,7 @@ mod tests {
             target: Product::StickyPotion,
         };
         let plot_plan = optimize_plots(context);
-        assert_eq!(plot_plan.output, 1089.0);
+        assert_eq!(plot_plan.output, 1123.0);
     }
 
     #[test]
@@ -4757,7 +4991,7 @@ mod tests {
             target: Product::PoisonPotion,
         };
         let plot_plan = optimize_plots(context);
-        assert_eq!(plot_plan.output, 825.0);
+        assert_eq!(plot_plan.output, 876.0);
     }
 
     #[test]
@@ -4859,7 +5093,7 @@ mod tests {
             target: Product::MajorPoisonPotion,
         };
         let plot_plan = optimize_plots(context);
-        assert_eq!(plot_plan.output, 263.0);
+        assert_eq!(plot_plan.output, 266.0);
     }
 
     #[test]
@@ -4876,7 +5110,7 @@ mod tests {
             target: Product::InvisibilityPotion,
         };
         let plot_plan = optimize_plots(context);
-        assert_eq!(plot_plan.output, 263.0);
+        assert_eq!(plot_plan.output, 266.0);
     }
 
     #[test]
@@ -5183,5 +5417,39 @@ mod tests {
         };
         let plot_plan = optimize_plots(context);
         assert_eq!(plot_plan.output, 732.0);
+    }
+
+    #[test]
+    fn low_count_test() {
+        let context = ModelContext {
+            brecilien_plots: 0 as f64,
+            bridgewatch_plots: 0 as f64,
+            caerleon_plots: 0 as f64,
+            fort_sterling_plots: 0 as f64,
+            lymhurst_plots: 3 as f64,
+            martlock_plots: 0 as f64,
+            thetford_plots: 0 as f64,
+            premium_factor: PREMIUM_FACTOR,
+            target: Product::MajorPoisonPotion,
+        };
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 3.0);
+    }
+
+    #[test]
+    fn impossible_count_test() {
+        let context = ModelContext {
+            brecilien_plots: 0 as f64,
+            bridgewatch_plots: 0 as f64,
+            caerleon_plots: 0 as f64,
+            fort_sterling_plots: 0 as f64,
+            lymhurst_plots: 2 as f64,
+            martlock_plots: 0 as f64,
+            thetford_plots: 0 as f64,
+            premium_factor: PREMIUM_FACTOR,
+            target: Product::MajorPoisonPotion,
+        };
+        let plot_plan = optimize_plots(context);
+        assert_eq!(plot_plan.output, 0.0);
     }
 }

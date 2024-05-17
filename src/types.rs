@@ -1,5 +1,6 @@
 use clap::ValueEnum;
 use regex::Regex;
+use derive_more::Add;
 
 #[derive(PartialEq, ValueEnum, Clone, Debug)]
 pub enum PremiumStatus {
@@ -61,7 +62,19 @@ pub struct ModelContext {
     pub target: Product,
 }
 
-#[derive(Debug)]
+impl ModelContext {
+    pub fn subtract_plot_plan(&mut self, plot_plan: PlotPlan) {
+        self.brecilien_plots -= plot_plan.herb_gardens_brecilien + plot_plan.pastures_brecilien + plot_plan.farms_brecilien;
+        self.bridgewatch_plots -= plot_plan.herb_gardens_bridgewatch + plot_plan.pastures_bridgewatch + plot_plan.farms_bridgewatch;
+        self.caerleon_plots -= plot_plan.herb_gardens_caerleon + plot_plan.pastures_caerleon + plot_plan.farms_caerleon;
+        self.fort_sterling_plots -= plot_plan.herb_gardens_fort_sterling + plot_plan.pastures_fort_sterling + plot_plan.farms_fort_sterling;
+        self.lymhurst_plots -= plot_plan.herb_gardens_lymhurst + plot_plan.pastures_lymhurst + plot_plan.farms_lymhurst;
+        self.martlock_plots -= plot_plan.herb_gardens_martlock + plot_plan.pastures_martlock + plot_plan.farms_martlock;
+        self.thetford_plots -= plot_plan.herb_gardens_thetford + plot_plan.pastures_thetford + plot_plan.farms_thetford;
+    }
+}
+
+#[derive(Debug, Add, Default, Copy, Clone)]
 pub struct PlotPlan {
     pub output: f64,
 

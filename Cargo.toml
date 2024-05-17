@@ -1,11 +1,12 @@
 [package]
 name = "albion-island-balancer"
-version = "0.1.6"
+version = "0.1.7"
 authors = ["Christian Smith <smith.christian.william@gmail.com>"]
 edition = "2021"
 
 [dependencies]
 regex = "1.10.4"
 minilp = "0.2.2"
+derive_more = "0.99.17"
 clap = { version = "4.5.4", features = ["derive"] }
 
