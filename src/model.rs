@@ -2981,7 +2981,6 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
     println!("{}", solution_pastures_thetford);    
 
     // constrain patches
-    // TODO: see if there's a better way than using .round()
     problem.add_constraint(
         &[(
             herb_gardens_brecilien,
