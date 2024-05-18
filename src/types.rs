@@ -1,6 +1,9 @@
 use clap::ValueEnum;
-use regex::Regex;
 use derive_more::Add;
+use serde::{Serialize, Deserialize};
+use serde_json::{Value, Map};
+
+use crate::constants::TILES_PER_PLOT;
 
 #[derive(PartialEq, ValueEnum, Clone, Debug)]
 pub enum PremiumStatus {
@@ -74,7 +77,7 @@ impl ModelContext {
     }
 }
 
-#[derive(Debug, Add, Default, Copy, Clone)]
+#[derive(Debug, Add, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct PlotPlan {
     pub output: f64,
 
@@ -293,25 +296,33 @@ pub struct PlotPlan {
 
 impl PlotPlan {
     pub fn display(&self) -> String {
-        // Use the default Debug implementation to format the struct
-        let formatted = format!("{:?}", self);
+        let hashmap = self.to_hashmap();
+        let mut out = "".to_string();
+        out.extend("PlotPlan {\n".chars());
+        out.extend(format!("    {}: {:?},\n", "output", hashmap.clone().unwrap().get("output").unwrap().as_f64().unwrap()).chars());
+        for (key, value) in hashmap.clone().unwrap() {
+            let v = value.as_f64().unwrap();
+            if v != 0.0 {
+                if !key.contains("tiles") && !key.contains("output") {
+                    out.extend(format!("    {}: {:?},\n", key, v).chars());
+                }
+            }
+        }
+        for (key, value) in hashmap.clone().unwrap() {
+            let v = value.as_f64().unwrap();
+            if v != 0.0 {
+                if key.contains("tiles") {
+                    out.extend(format!("    {}: {:?}, # [{} dedicated plot(s), {} extra tile(s)]\n", key, v, (v / TILES_PER_PLOT).floor(), v % TILES_PER_PLOT).chars());
+                }
+            }
+        }
+        out.extend("}".chars());
+        out
+    }
 
-        // Define a regex to match fields with value 0.0
-        let re = Regex::new(r",\s*\w+: -?0\.0").unwrap();
-
-        // Remove fields with value 0.0
-        let result = re.replace_all(&formatted, "");
-
-        let re = Regex::new(r"\{").unwrap();
-        let result = re.replace_all(&result, "{\n    ");
-
-        let re = Regex::new(r",").unwrap();
-        let result = re.replace_all(&result, ",\n    ");
-
-        let re = Regex::new(r"\}").unwrap();
-        let result = re.replace_all(&result, "\n}");
-
-        // Return the cleaned string
-        result.to_string()
+    fn to_hashmap(&self) -> Option<Map<String, Value>> {
+        let json_value = serde_json::to_value(self).ok()?;
+        let hashmap = json_value.as_object()?.clone();
+        Some(hashmap)
     }
 }
