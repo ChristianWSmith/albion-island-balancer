@@ -2,13 +2,15 @@ mod constants;
 mod model;
 mod types;
 use clap::{Arg, Command};
-use std::thread;
-use std::time::Duration;
 use std::io::{self, Write};
 use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::Duration;
 
 use crate::{
-    constants::{FREE_FACTOR, PREMIUM_FACTOR}, model::optimize_plots, types::{ModelContext, PremiumStatus, Product}
+    constants::{FREE_FACTOR, PREMIUM_FACTOR},
+    model::optimize_plots,
+    types::{ModelContext, PremiumStatus, Product},
 };
 
 fn main() {
@@ -181,17 +183,15 @@ fn main() {
     let running = Arc::new(Mutex::new(true));
     let running_clone = Arc::clone(&running);
 
-    let loading_handle = thread::spawn(move || {
-        loop {
-            print!("Thinking {}  \r", frames[frame_index]);
+    let loading_handle = thread::spawn(move || loop {
+        print!("Thinking {}  \r", frames[frame_index]);
+        io::stdout().flush().unwrap();
+        frame_index = (frame_index + 1) % frames.len();
+        thread::sleep(Duration::from_millis(100));
+        if !*running_clone.lock().unwrap() {
+            print!("            \r");
             io::stdout().flush().unwrap();
-            frame_index = (frame_index + 1) % frames.len();
-            thread::sleep(Duration::from_millis(100));
-            if !*running_clone.lock().unwrap() {
-                print!("            \r");
-                io::stdout().flush().unwrap();
-                break;
-            }
+            break;
         }
     });
 

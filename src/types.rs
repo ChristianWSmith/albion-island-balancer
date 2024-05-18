@@ -1,7 +1,7 @@
 use clap::ValueEnum;
 use derive_more::Add;
-use serde::{Serialize, Deserialize};
-use serde_json::{Value, Map};
+use serde::{Deserialize, Serialize};
+use serde_json::{Map, Value};
 
 use crate::constants::TILES_PER_PLOT;
 
@@ -67,13 +67,27 @@ pub struct ModelContext {
 
 impl ModelContext {
     pub fn subtract_plot_plan(&mut self, plot_plan: PlotPlan) {
-        self.brecilien_plots -= plot_plan.herb_gardens_brecilien + plot_plan.pastures_brecilien + plot_plan.farms_brecilien;
-        self.bridgewatch_plots -= plot_plan.herb_gardens_bridgewatch + plot_plan.pastures_bridgewatch + plot_plan.farms_bridgewatch;
-        self.caerleon_plots -= plot_plan.herb_gardens_caerleon + plot_plan.pastures_caerleon + plot_plan.farms_caerleon;
-        self.fort_sterling_plots -= plot_plan.herb_gardens_fort_sterling + plot_plan.pastures_fort_sterling + plot_plan.farms_fort_sterling;
-        self.lymhurst_plots -= plot_plan.herb_gardens_lymhurst + plot_plan.pastures_lymhurst + plot_plan.farms_lymhurst;
-        self.martlock_plots -= plot_plan.herb_gardens_martlock + plot_plan.pastures_martlock + plot_plan.farms_martlock;
-        self.thetford_plots -= plot_plan.herb_gardens_thetford + plot_plan.pastures_thetford + plot_plan.farms_thetford;
+        self.brecilien_plots -= plot_plan.herb_gardens_brecilien
+            + plot_plan.pastures_brecilien
+            + plot_plan.farms_brecilien;
+        self.bridgewatch_plots -= plot_plan.herb_gardens_bridgewatch
+            + plot_plan.pastures_bridgewatch
+            + plot_plan.farms_bridgewatch;
+        self.caerleon_plots -= plot_plan.herb_gardens_caerleon
+            + plot_plan.pastures_caerleon
+            + plot_plan.farms_caerleon;
+        self.fort_sterling_plots -= plot_plan.herb_gardens_fort_sterling
+            + plot_plan.pastures_fort_sterling
+            + plot_plan.farms_fort_sterling;
+        self.lymhurst_plots -= plot_plan.herb_gardens_lymhurst
+            + plot_plan.pastures_lymhurst
+            + plot_plan.farms_lymhurst;
+        self.martlock_plots -= plot_plan.herb_gardens_martlock
+            + plot_plan.pastures_martlock
+            + plot_plan.farms_martlock;
+        self.thetford_plots -= plot_plan.herb_gardens_thetford
+            + plot_plan.pastures_thetford
+            + plot_plan.farms_thetford;
     }
 }
 
@@ -299,7 +313,20 @@ impl PlotPlan {
         let hashmap = self.to_hashmap();
         let mut out = "".to_string();
         out.extend("PlotPlan {\n".chars());
-        out.extend(format!("    {}: {:?},\n", "output", hashmap.clone().unwrap().get("output").unwrap().as_f64().unwrap()).chars());
+        out.extend(
+            format!(
+                "    {}: {:?},\n",
+                "output",
+                hashmap
+                    .clone()
+                    .unwrap()
+                    .get("output")
+                    .unwrap()
+                    .as_f64()
+                    .unwrap()
+            )
+            .chars(),
+        );
         for (key, value) in hashmap.clone().unwrap() {
             let v = value.as_f64().unwrap();
             if v != 0.0 {
@@ -312,7 +339,16 @@ impl PlotPlan {
             let v = value.as_f64().unwrap();
             if v != 0.0 {
                 if key.contains("tiles") {
-                    out.extend(format!("    {}: {:?}, # [{} dedicated plot(s), {} extra tile(s)]\n", key, v, (v / TILES_PER_PLOT).floor(), v % TILES_PER_PLOT).chars());
+                    out.extend(
+                        format!(
+                            "    {}: {:?}, # [{} dedicated plot(s), {} extra tile(s)]\n",
+                            key,
+                            v,
+                            (v / TILES_PER_PLOT).floor(),
+                            v % TILES_PER_PLOT
+                        )
+                        .chars(),
+                    );
                 }
             }
         }

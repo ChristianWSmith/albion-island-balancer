@@ -44,7 +44,7 @@ pub fn optimize_plots(context: ModelContext) -> PlotPlan {
         }
     }
     match best_plot_plan {
-        Some(plot_plan) => { return plot_plan },
+        Some(plot_plan) => return plot_plan,
         None => return PlotPlan::default(),
     }
 }
