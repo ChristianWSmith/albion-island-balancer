@@ -323,7 +323,7 @@ impl PlotPlan {
                     .get("output")
                     .unwrap()
                     .as_f64()
-                    .unwrap()
+                    .unwrap() as u64
             )
             .chars(),
         );
@@ -331,7 +331,7 @@ impl PlotPlan {
             let v = value.as_f64().unwrap();
             if v != 0.0 {
                 if !key.contains("tiles") && !key.contains("output") {
-                    out.extend(format!("    {}: {:?},\n", key, v).chars());
+                    out.extend(format!("    {}: {:?},\n", key, v as u64).chars());
                 }
             }
         }
@@ -343,7 +343,7 @@ impl PlotPlan {
                         format!(
                             "    {}: {:?}, # [{} dedicated plot(s), {} extra tile(s)]\n",
                             key,
-                            v,
+                            v as u64,
                             (v / TILES_PER_PLOT).floor(),
                             v % TILES_PER_PLOT
                         )
